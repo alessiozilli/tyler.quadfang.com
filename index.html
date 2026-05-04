@@ -282,6 +282,9 @@ footer .signature{color:var(--gold);font-family:'Oswald';font-weight:600;letter-
     <button class="tab" data-tab="social"><span class="ic">📱</span>Social</button>
     <button class="tab" data-tab="comms"><span class="ic">💬</span>Comms</button>
     <button class="tab" data-tab="practice"><span class="ic">🥍</span>Practice</button>
+    <button class="tab" data-tab="duties"><span class="ic">🛡️</span>Duties</button>
+    <button class="tab" data-tab="slides"><span class="ic">🎬</span>Slideshow</button>
+    <button class="tab" data-tab="watch"><span class="ic">🔔</span>Watch</button>
     <button class="tab" data-tab="trip"><span class="ic">🎒</span>Trip Kit</button>
     <button class="tab" data-tab="settings"><span class="ic">⚙️</span>Setup</button>
   </div>
@@ -292,7 +295,7 @@ footer .signature{color:var(--gold);font-family:'Oswald';font-weight:600;letter-
 <!-- TOURNAMENT -->
 <section class="panel active" id="tournament">
   <h2 class="section-title">Tournament Weekend</h2>
-  <p class="section-sub">RJ Lalonde Arena, Lloydminster · 10 teams, top 4 play Sunday · Pre-loaded from your sheet.</p>
+  <p class="section-sub">Lloyd · RJ Lalonde Arena (10 teams, top 4 Sun) &nbsp;·&nbsp; Red Deer · Tradition Lives May 15–18 · G.H. Dawe Arena (U15B) &nbsp;·&nbsp; Pre-loaded from your sheet.</p>
 
   <div class="card" style="margin-bottom:18px">
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px">
@@ -479,6 +482,80 @@ footer .signature{color:var(--gold);font-family:'Oswald';font-weight:600;letter-
   <div class="output-box" id="practiceOutput">Pick a focus and click Build Plan.</div>
 </section>
 
+<!-- DUTIES -->
+<section class="panel" id="duties">
+  <h2 class="section-title">Parent Duties</h2>
+  <p class="section-sub">Auto-assigns volunteer jobs across the parent list. Home games need 4 (score sheet, penalty box, shot clock, game sheet). Away games need 2 (penalty box, shot clock).</p>
+
+  <div class="card" style="margin-bottom:18px">
+    <div style="font-family:'Oswald';font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:10px">Add a parent volunteer</div>
+    <div class="form-grid">
+      <div><label>Name</label><input id="v-name" placeholder="Sarah Pederson"></div>
+      <div><label>Phone</label><input type="tel" id="v-phone" placeholder="780-555-1234"></div>
+      <div><label>Max jobs / weekend</label><input type="number" id="v-max" value="2" min="1" max="6"></div>
+      <div><label>Preferred role</label><select id="v-pref"><option value="">No preference</option><option>Score Sheet</option><option>Penalty Box</option><option>Shot Clock</option><option>Game Sheet</option></select></div>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="addVolunteer()">+ Add Volunteer</button>
+      <button class="btn btn-secondary" onclick="autoAssignDuties()">⚙ Auto-Assign All Games</button>
+      <button class="btn btn-ghost" onclick="reRollDuties()">🎲 Re-Roll</button>
+      <button class="btn btn-ghost" onclick="clearDuties()" style="color:var(--red);border-color:var(--red)">🗑 Clear Assignments</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:18px">
+    <div style="font-family:'Oswald';font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:10px">Volunteer roster</div>
+    <div id="volunteersList" class="roster-grid"></div>
+  </div>
+
+  <h3 class="section-title" style="font-size:22px;margin-top:24px">Game Assignments</h3>
+  <div id="dutiesList"></div>
+</section>
+
+<!-- SLIDESHOW -->
+<section class="panel" id="slides">
+  <h2 class="section-title">Social Slideshow</h2>
+  <p class="section-sub">4-slide vertical reel for Instagram / TikTok / Facebook stories. 1080×1920 each.</p>
+
+  <div class="card" style="margin-bottom:18px">
+    <div class="form-grid">
+      <div style="grid-column:span 2"><label>Game</label><select id="sl-game"></select></div>
+    </div>
+    <div style="margin-top:12px"><button class="btn btn-primary" onclick="renderSlideshow()">🎬 Generate 4 Slides</button></div>
+  </div>
+
+  <div id="slidesPreview" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px"></div>
+
+  <div class="btn-row" style="margin-top:18px">
+    <button class="btn btn-primary" onclick="downloadAllSlides()">⬇ Download All 4 PNGs</button>
+  </div>
+</section>
+
+<!-- WATCH -->
+<section class="panel" id="watch">
+  <h2 class="section-title">Schedule Watch</h2>
+  <p class="section-sub">Log game time / location changes when you hear about them. CC keeps the history + auto-builds a parent-text alert.</p>
+
+  <div class="card" style="margin-bottom:18px;border-left:4px solid var(--gold)">
+    <div style="font-family:'Oswald';font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:6px">📡 About the auto-watch feature</div>
+    <div style="font-size:13px;color:var(--text);line-height:1.6">A real continuous website monitor needs a server checking on a timer — that's Phase 2 (forge-code build, ~2 hours setup). For now, log changes manually here when you spot them and the CC handles the alert text + history.</div>
+  </div>
+
+  <div class="card" style="margin-bottom:18px">
+    <div style="font-family:'Oswald';font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:10px">Log a change</div>
+    <div class="form-grid">
+      <div style="grid-column:span 2"><label>Game</label><select id="w-game"></select></div>
+      <div><label>New Day</label><select id="w-day"><option value="">— same —</option><option>FRI</option><option>SAT</option><option>SUN</option><option>MON</option><option>TUE</option><option>WED</option><option>THU</option></select></div>
+      <div><label>New Time</label><input type="time" id="w-time"></div>
+      <div style="grid-column:span 2"><label>New Location (optional)</label><input id="w-loc" placeholder="Same as before — leave blank"></div>
+      <div style="grid-column:span 2"><label>Source / where you heard it</label><input id="w-src" placeholder="TeamLinkt notification / coach text / RAMP page"></div>
+    </div>
+    <div style="margin-top:12px"><button class="btn btn-primary" onclick="logChange()">🔔 Log Change & Build Text</button></div>
+  </div>
+
+  <div id="watchList"></div>
+</section>
+
 <!-- TRIP -->
 <section class="panel" id="trip">
   <h2 class="section-title">Trip Kit</h2>
@@ -579,10 +656,19 @@ const DEFAULT_STATE = {
     {id:'t8',day:'SAT',time:'18:30',title:'Group Bonding — Bobcats Jr B',type:'bonding',loc:'RJ Lalonde Arena',notes:'Recommended but optional'},
     {id:'t9',day:'SAT',time:'22:30',title:'Curfew',type:'curfew',loc:'Hotel',notes:'After Jr B game'},
     {id:'t10',day:'SUN',time:'12:00',title:'3rd vs 4th Place — TBD',type:'tbd',loc:'C2 Cenovus',notes:'Top 4 of 10 teams play Sunday'},
-    {id:'t11',day:'SUN',time:'12:30',title:'1st Place Game vs Lloyd Brutes 1 — TBD',type:'tbd',loc:'RJ Lalonde Arena',notes:'Top 4 of 10 teams play Sunday'}
+    {id:'t11',day:'SUN',time:'12:30',title:'1st Place Game vs Lloyd Brutes 1 — TBD',type:'tbd',loc:'RJ Lalonde Arena',notes:'Top 4 of 10 teams play Sunday'},
+    // ---------- Red Deer · Tradition Lives 2026 (May 15–18) · U15B Thrashers ----------
+    {id:'t12',day:'SAT',time:'09:30',title:'Game 1 — vs Brooks Drillers',type:'game-home',loc:'G.H. Dawe Arena, Red Deer (South)',notes:'Tradition Lives · Sat May 16 · Home · Round-robin'},
+    {id:'t13',day:'SAT',time:'14:30',title:'Game 2 — vs Red Deer Chiefs U15 B 1',type:'game-away',loc:'G.H. Dawe Arena, Red Deer (North)',notes:'Tradition Lives · Sat May 16 · Away · Round-robin'},
+    {id:'t14',day:'SUN',time:'11:45',title:'Game 3 — vs Calgary Axemen B2',type:'game-home',loc:'G.H. Dawe Arena, Red Deer (South)',notes:'Tradition Lives · Sun May 17 · Home · Round-robin'},
+    {id:'t15',day:'SUN',time:'16:30',title:'Bracket Placement — TBD',type:'tbd',loc:'G.H. Dawe Arena, Red Deer',notes:'Tradition Lives · Sun May 17 · Time + opponent depend on pool finish (16:30 / 17:00 / 18:00 / 18:30)'},
+    {id:'t16',day:'MON',time:'09:45',title:'Medal Game (if qualified) — TBD',type:'tbd',loc:'G.H. Dawe Arena, Red Deer',notes:'Tradition Lives · Mon May 18 · Bronze or Gold depending on bracket'}
   ],
   custom: [],
   roster: [],
+  volunteers: [],
+  duties: {},
+  watch: [],
   trip: {},
   socialState:{},
   commsState:{}
@@ -827,6 +913,10 @@ function populateGameSelect(){
     opt.textContent = `${g.day} ${fmtTimeStr(g.time)} — ${g.title}`;
     sel.appendChild(opt);
   });
+  // keep slideshow + watch dropdowns in sync if they exist
+  if(document.getElementById('sl-game')) populateSlideGames();
+  if(document.getElementById('w-game')) populateWatchGames();
+  if(document.getElementById('dutiesList')) renderDuties();
 }
 function findGame(id){
   return [...state.tournament, ...state.custom].find(e=>e.id===id);
@@ -1404,6 +1494,343 @@ function wipeAll(){
   toast('Wiped — back to default');
 }
 
+// ============= VOLUNTEERS / DUTIES =============
+function addVolunteer(){
+  const name = document.getElementById('v-name').value.trim();
+  if(!name){ toast('Name required'); return; }
+  state.volunteers.push({
+    id:'v'+Date.now(),
+    name,
+    phone: document.getElementById('v-phone').value,
+    max: parseInt(document.getElementById('v-max').value)||2,
+    pref: document.getElementById('v-pref').value
+  });
+  saveState();
+  ['v-name','v-phone'].forEach(id=>document.getElementById(id).value='');
+  renderVolunteers();
+  toast('Volunteer added');
+}
+function renderVolunteers(){
+  const list = document.getElementById('volunteersList');
+  if(!list) return;
+  list.innerHTML = '';
+  if(state.volunteers.length===0){
+    list.innerHTML = '<div class="empty" style="grid-column:1/-1">No volunteers yet. Add parents above.</div>';
+    return;
+  }
+  state.volunteers.forEach(v=>{
+    const el = document.createElement('div');
+    el.className = 'player';
+    const initials = v.name.split(' ').map(n=>n[0]).slice(0,2).join('').toUpperCase();
+    el.innerHTML = `
+      <div class="jersey" style="background:radial-gradient(circle at 30% 30%, var(--ice), #0891B2);font-size:18px">${initials}</div>
+      <div class="player-info">
+        <div class="player-name">${escapeHtml(v.name)}</div>
+        <div class="player-meta">${escapeHtml(v.phone||'')} · max ${v.max}/wknd${v.pref?' · prefers '+v.pref:''}</div>
+      </div>
+      <button class="player-del" data-id="${v.id}">✕</button>
+    `;
+    el.querySelector('.player-del').addEventListener('click',()=>{
+      if(!confirm('Remove '+v.name+'?')) return;
+      state.volunteers = state.volunteers.filter(x=>x.id!==v.id);
+      state.duties = {};
+      saveState(); renderVolunteers(); renderDuties();
+    });
+    list.appendChild(el);
+  });
+}
+function gamesForDuties(){
+  return [...state.tournament, ...state.custom].filter(e=>['game-home','game-away','tbd'].includes(e.type));
+}
+function rolesFor(type){
+  if(type==='game-home') return ['Score Sheet','Penalty Box','Shot Clock','Game Sheet'];
+  return ['Penalty Box','Shot Clock'];
+}
+function autoAssignDuties(){
+  if(state.volunteers.length===0){ toast('Add volunteers first'); return; }
+  const games = gamesForDuties();
+  if(games.length===0){ toast('No games yet'); return; }
+  state.duties = {};
+  const count = {};
+  state.volunteers.forEach(v=>count[v.id]=0);
+  games.forEach(g=>{
+    const roles = rolesFor(g.type);
+    const slots = [];
+    roles.forEach(role=>{
+      const eligible = state.volunteers
+        .filter(v=>count[v.id] < v.max)
+        .map(v=>({v, score: (v.pref===role?-100:0) + count[v.id] + Math.random()*0.1}))
+        .sort((a,b)=>a.score-b.score);
+      if(eligible.length===0){
+        slots.push({role, volunteerId:null, name:'(need volunteer)', phone:''});
+      } else {
+        const chosen = eligible[0].v;
+        count[chosen.id]++;
+        slots.push({role, volunteerId:chosen.id, name:chosen.name, phone:chosen.phone||''});
+      }
+    });
+    state.duties[g.id] = slots;
+  });
+  saveState();
+  renderDuties();
+  toast('Duties assigned');
+}
+function reRollDuties(){
+  state.duties = {};
+  autoAssignDuties();
+}
+function clearDuties(){
+  if(!confirm('Clear all duty assignments?')) return;
+  state.duties = {};
+  saveState();
+  renderDuties();
+}
+function renderDuties(){
+  const wrap = document.getElementById('dutiesList');
+  if(!wrap) return;
+  wrap.innerHTML = '';
+  const games = gamesForDuties();
+  if(games.length===0){
+    wrap.innerHTML = '<div class="empty">No games yet.</div>';
+    return;
+  }
+  games.forEach(g=>{
+    const slots = state.duties[g.id] || rolesFor(g.type).map(r=>({role:r, name:'(unassigned)', phone:''}));
+    const isHome = g.type==='game-home';
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.marginBottom = '12px';
+    card.style.borderLeft = '4px solid '+(isHome?'var(--ice)':'var(--fire)');
+    const rolesHtml = slots.map(s=>{
+      const smsBody = encodeURIComponent('Hi '+(s.name.split(' ')[0]||'')+'! Volunteer reminder: '+s.role+' for '+g.title+' '+(g.day||'')+' '+fmtTimeStr(g.time)+' at '+(g.loc||'TBD')+'. Thanks! — '+state.settings.mgr);
+      const phoneBtn = s.phone ? `<a href="sms:${s.phone}?body=${smsBody}" style="color:var(--ice);text-decoration:none;font-size:12px;margin-left:8px">📱 Text</a>` : '';
+      return `<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)">
+        <span style="font-family:'Oswald';font-size:13px;color:var(--gold);text-transform:uppercase;letter-spacing:.05em">${s.role}</span>
+        <span style="font-size:14px">${escapeHtml(s.name)}${phoneBtn}</span>
+      </div>`;
+    }).join('');
+    card.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div>
+          <div style="font-family:'Bebas Neue';font-size:22px;letter-spacing:.04em">${escapeHtml(g.title)}</div>
+          <div style="font-size:12px;color:var(--mute)">${g.day||''} ${fmtTimeStr(g.time)} · ${escapeHtml(g.loc||'TBD')} · ${isHome?'HOME — 4 jobs':'AWAY — 2 jobs'}</div>
+        </div>
+      </div>
+      ${rolesHtml}
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+// ============= SLIDESHOW =============
+function populateSlideGames(){
+  const sel = document.getElementById('sl-game');
+  if(!sel) return;
+  sel.innerHTML = '';
+  const games = [...state.tournament, ...state.custom].filter(e=>['game-home','game-away','tbd'].includes(e.type));
+  if(games.length===0){
+    sel.innerHTML = '<option value="">No games yet</option>'; return;
+  }
+  games.forEach(g=>{
+    const opt = document.createElement('option');
+    opt.value = g.id;
+    opt.textContent = `${g.day} ${fmtTimeStr(g.time)} — ${g.title}`;
+    sel.appendChild(opt);
+  });
+}
+function slideBg(c1,c2){
+  return `<defs>
+    <linearGradient id="slbg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#05080F"/><stop offset="1" stop-color="#0A1228"/>
+    </linearGradient>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#slbg)"/>
+  <rect x="0" y="0" width="1080" height="6" fill="${c2}"/>
+  <rect x="0" y="1914" width="1080" height="6" fill="${c1}"/>`;
+}
+function slideHype({c1,c2,team}){
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="100%" style="aspect-ratio:9/16">
+    ${slideBg(c1,c2)}
+    <text x="540" y="700" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="160" fill="#FFC857" letter-spacing="20">GAME</text>
+    <text x="540" y="900" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="160" fill="#FFC857" letter-spacing="20">DAY</text>
+    <rect x="240" y="1000" width="600" height="4" fill="${c2}"/>
+    <text x="540" y="1140" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="100" fill="#fff" letter-spacing="6">${team}</text>
+    <text x="540" y="1700" text-anchor="middle" font-family="Oswald, sans-serif" font-size="28" fill="${c1}" letter-spacing="8">SWIPE →</text>
+  </svg>`;
+}
+function slideMatchup({c1,c2,team,opp,isHome}){
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="100%" style="aspect-ratio:9/16">
+    ${slideBg(c1,c2)}
+    <text x="540" y="380" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="64" fill="#FFC857" letter-spacing="12">${isHome?'HOME':'AWAY'}</text>
+    <text x="540" y="650" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="120" fill="#fff">${team}</text>
+    <text x="540" y="720" text-anchor="middle" font-family="Oswald, sans-serif" font-size="28" fill="${c1}" letter-spacing="6">US</text>
+    <text x="540" y="1000" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="200" fill="#FFC857">VS</text>
+    <text x="540" y="1280" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="120" fill="#fff">${opp}</text>
+    <text x="540" y="1350" text-anchor="middle" font-family="Oswald, sans-serif" font-size="28" fill="${c2}" letter-spacing="6">THEM</text>
+  </svg>`;
+}
+function slideTime({c1,c2,day,time,loc}){
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="100%" style="aspect-ratio:9/16">
+    ${slideBg(c1,c2)}
+    <text x="540" y="500" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="80" fill="${c2}" letter-spacing="12">WHEN</text>
+    <text x="540" y="700" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="120" fill="#fff">${day.toUpperCase()}</text>
+    <text x="540" y="850" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="160" fill="#FFC857">${time}</text>
+    <rect x="240" y="950" width="600" height="4" fill="${c1}"/>
+    <text x="540" y="1150" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="80" fill="${c2}" letter-spacing="12">WHERE</text>
+    <text x="540" y="1320" text-anchor="middle" font-family="Oswald, sans-serif" font-size="56" fill="#fff" letter-spacing="3">${loc.toUpperCase()}</text>
+  </svg>`;
+}
+function slideGo({c1,c2,team}){
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="100%" style="aspect-ratio:9/16">
+    ${slideBg(c1,c2)}
+    <text x="540" y="800" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="220" fill="${c1}" letter-spacing="20">GO</text>
+    <text x="540" y="1050" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="180" fill="#fff" letter-spacing="8">${team}</text>
+    <rect x="240" y="1130" width="600" height="6" fill="${c2}"/>
+    <text x="540" y="1300" text-anchor="middle" font-family="Oswald, sans-serif" font-size="36" fill="#FFC857" letter-spacing="8">#GOTHRASHERS</text>
+    <text x="540" y="1700" text-anchor="middle" font-family="Oswald, sans-serif" font-size="22" fill="${c2}" letter-spacing="6">SEE YOU AT THE RINK</text>
+  </svg>`;
+}
+function buildSlidesFor(game){
+  const c1 = state.settings.c1, c2 = state.settings.c2;
+  const team = state.settings.short.toUpperCase();
+  const opp = parseOpponent(game.title).toUpperCase();
+  const time = fmtTimeStr(game.time);
+  const day = dayLabel(game.day);
+  const loc = game.loc || 'TBD';
+  const isHome = game.type==='game-home';
+  return [
+    {name:'1-hype', svg: slideHype({c1,c2,team})},
+    {name:'2-matchup', svg: slideMatchup({c1,c2,team,opp,isHome})},
+    {name:'3-time', svg: slideTime({c1,c2,day,time,loc})},
+    {name:'4-go', svg: slideGo({c1,c2,team})}
+  ];
+}
+function renderSlideshow(){
+  const game = findGame(document.getElementById('sl-game').value);
+  if(!game){ toast('Pick a game'); return; }
+  const slides = buildSlidesFor(game);
+  const wrap = document.getElementById('slidesPreview');
+  wrap.innerHTML = '';
+  slides.forEach((s,i)=>{
+    const div = document.createElement('div');
+    div.style.cssText = 'background:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px;text-align:center';
+    div.innerHTML = `${s.svg}<div style="margin-top:8px;display:flex;gap:6px;justify-content:center;align-items:center"><span style="font-family:'Oswald';font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:.1em">Slide ${i+1}</span><button class="btn btn-secondary" style="padding:4px 10px;font-size:11px" data-slide="${i}">⬇ PNG</button></div>`;
+    div.querySelector('button').addEventListener('click',()=>downloadSlide(i, slides));
+    wrap.appendChild(div);
+  });
+}
+function downloadSlide(idx, slides){
+  const data = slides[idx].svg;
+  const blob = new Blob([data], {type:'image/svg+xml;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const img = new Image();
+  img.onload = ()=>{
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080; canvas.height = 1920;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, 1080, 1920);
+    URL.revokeObjectURL(url);
+    canvas.toBlob(b=> triggerDownload(b, fileStem()+'-slide-'+slides[idx].name+'.png'), 'image/png');
+  };
+  img.onerror = ()=>{ toast('Slide download failed'); URL.revokeObjectURL(url); };
+  img.src = url;
+}
+async function downloadAllSlides(){
+  const game = findGame(document.getElementById('sl-game').value);
+  if(!game){ toast('Pick a game and generate first'); return; }
+  const slides = buildSlidesFor(game);
+  for(let i=0;i<slides.length;i++){
+    setTimeout(()=>downloadSlide(i, slides), 500*i);
+  }
+  toast('Downloading 4 slides');
+}
+
+// ============= WATCH =============
+function populateWatchGames(){
+  const sel = document.getElementById('w-game');
+  if(!sel) return;
+  sel.innerHTML = '';
+  const games = [...state.tournament, ...state.custom];
+  games.forEach(g=>{
+    const opt = document.createElement('option');
+    opt.value = g.id;
+    opt.textContent = `${g.day} ${fmtTimeStr(g.time)} — ${g.title}`;
+    sel.appendChild(opt);
+  });
+}
+function logChange(){
+  const gameId = document.getElementById('w-game').value;
+  const game = [...state.tournament,...state.custom].find(g=>g.id===gameId);
+  if(!game){ toast('Pick a game'); return; }
+  const newDay = document.getElementById('w-day').value;
+  const newTime = document.getElementById('w-time').value;
+  const newLoc = document.getElementById('w-loc').value;
+  const src = document.getElementById('w-src').value;
+  if(!newDay && !newTime && !newLoc){ toast('Need at least one change'); return; }
+  state.watch.unshift({
+    id:'w'+Date.now(),
+    when: new Date().toISOString(),
+    gameId, gameTitle: game.title,
+    oldDay: game.day, oldTime: game.time, oldLoc: game.loc,
+    newDay: newDay || game.day, newTime: newTime || game.time, newLoc: newLoc || game.loc,
+    src
+  });
+  saveState();
+  ['w-time','w-loc','w-src'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('w-day').value = '';
+  renderWatch();
+  toast('Change logged');
+}
+function watchTextFor(c){
+  const oldStr = `${c.oldDay} ${fmtTimeStr(c.oldTime)} @ ${c.oldLoc||'TBD'}`;
+  const newStr = `${c.newDay} ${fmtTimeStr(c.newTime)} @ ${c.newLoc||'TBD'}`;
+  return `🔔 ${state.settings.short} parents — quick update!\n\n${c.gameTitle} has been moved.\n\nOLD: ${oldStr}\nNEW: ${newStr}\n\nPlease update your TeamLinkt and let me know if any conflicts.\n\n— ${state.settings.mgr}`;
+}
+function renderWatch(){
+  const wrap = document.getElementById('watchList');
+  if(!wrap) return;
+  wrap.innerHTML = '';
+  if(state.watch.length===0){
+    wrap.innerHTML = '<div class="empty">No changes logged yet. When you spot a time/place change, log it here.</div>';
+    return;
+  }
+  state.watch.forEach(c=>{
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.marginBottom = '12px';
+    card.style.borderLeft = '4px solid var(--gold)';
+    const oldStr = `${c.oldDay} ${fmtTimeStr(c.oldTime)} @ ${c.oldLoc||'TBD'}`;
+    const newStr = `${c.newDay} ${fmtTimeStr(c.newTime)} @ ${c.newLoc||'TBD'}`;
+    const stamp = new Date(c.when).toLocaleString();
+    const text = watchTextFor(c);
+    card.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+        <div>
+          <div style="font-family:'Bebas Neue';font-size:20px">${escapeHtml(c.gameTitle)}</div>
+          <div style="font-size:11px;color:var(--mute)">${stamp} · ${escapeHtml(c.src||'no source noted')}</div>
+        </div>
+        <button data-act="del" data-id="${c.id}" style="background:rgba(239,68,68,.15);color:var(--red);border:none;border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer">✕</button>
+      </div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:13px;margin-bottom:10px">
+        <div><span style="color:var(--mute)">OLD:</span> ${escapeHtml(oldStr)}</div>
+        <div><span style="color:var(--mute)">NEW:</span> <span style="color:var(--ice)">${escapeHtml(newStr)}</span></div>
+      </div>
+      <div style="background:var(--ink);border:1px solid var(--line);border-radius:8px;padding:10px;font-family:'Courier New',monospace;font-size:12px;white-space:pre-wrap;color:var(--ice);margin-bottom:8px">${escapeHtml(text)}</div>
+      <button class="btn btn-secondary" data-act="copy" data-id="${c.id}">📋 Copy Parent Text</button>
+    `;
+    card.querySelector('[data-act="del"]').addEventListener('click',()=>{
+      if(!confirm('Delete this change log?')) return;
+      state.watch = state.watch.filter(x=>x.id!==c.id);
+      saveState(); renderWatch();
+    });
+    card.querySelector('[data-act="copy"]').addEventListener('click', async ()=>{
+      try{ await navigator.clipboard.writeText(text); toast('Copied'); }
+      catch(e){ toast('Copy failed') }
+    });
+    wrap.appendChild(card);
+  });
+}
+
 // ============= INIT =============
 function initAll(){
   loadSettingsForm();
@@ -1412,9 +1839,14 @@ function initAll(){
   renderCustom();
   renderRoster();
   populateGameSelect();
+  populateSlideGames();
+  populateWatchGames();
   renderSocialFields();
   renderCommsFields();
   renderTrip();
+  renderVolunteers();
+  renderDuties();
+  renderWatch();
 }
 initAll();
 </script>
