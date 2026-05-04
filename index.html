@@ -283,6 +283,32 @@ footer{
 }
 footer .signature{color:var(--gold);font-family:'Oswald';font-weight:600;letter-spacing:.05em;margin-top:4px}
 
+/* HOW TO USE TAB */
+.howto-section{margin:0 0 28px;padding:18px 22px;background:linear-gradient(135deg, rgba(15,26,56,.75) 0%, rgba(10,18,40,.55) 100%);border:1px solid var(--line);border-left:4px solid var(--ice);border-radius:12px}
+.howto-section h3{font-family:'Bebas Neue','Impact',sans-serif;font-size:24px;color:var(--ice);letter-spacing:.06em;margin:0 0 4px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.howto-section h3 .htn{font-family:'Oswald';font-size:11px;color:var(--mute);letter-spacing:.2em;background:rgba(255,255,255,.05);padding:3px 8px;border-radius:4px;font-weight:400}
+.howto-section .lead{color:var(--text);font-size:14px;margin:6px 0 12px;line-height:1.5}
+.howto-section ul{margin:0;padding:0 0 0 18px;color:var(--text);font-size:13px;line-height:1.7}
+.howto-section li{margin:0 0 4px}
+.howto-section li b{color:var(--gold)}
+.howto-section .tip{margin-top:10px;padding:10px 14px;background:rgba(255,200,87,.06);border-left:3px solid var(--gold);border-radius:6px;font-size:12.5px;color:#FFE6A0;line-height:1.55}
+.howto-section .tip b{color:#FFC857}
+.howto-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 22px}
+@media print {
+  body{background:#fff !important;color:#000 !important}
+  body::before{display:none}
+  header,nav.tabs,footer,.howto-toolbar,.event-actions{display:none !important}
+  main{padding:0 !important}
+  .panel{display:none !important}
+  .panel#howto{display:block !important}
+  .howto-section{background:#fff !important;border:1px solid #ccc !important;color:#000 !important;page-break-inside:avoid;margin-bottom:16px}
+  .howto-section h3{color:#0F1A38 !important}
+  .howto-section .lead, .howto-section li{color:#222 !important}
+  .howto-section li b{color:#B45309 !important}
+  .howto-section .tip{background:#fff7e0 !important;border-left-color:#B45309 !important;color:#3F2E00 !important}
+  .howto-section .tip b{color:#9A4D00 !important}
+  h2.section-title{color:#0F1A38 !important}
+}
 /* RESPONSIVE */
 @media (max-width:600px){
   .event{grid-template-columns:70px 1fr;gap:10px}
@@ -654,6 +680,177 @@ footer .signature{color:var(--gold);font-family:'Oswald';font-weight:600;letter-
     <div style="font-size:13px;line-height:1.7;color:var(--text)">
       Built free for Tyler by Alessio + Forge, 2026-05-04. Hosted at <span style="color:var(--ice)">tyler.quadfang.com</span>. All your data lives in this browser only — nothing is sent anywhere. Use the Backup button before clearing your browser cache. Bookmark this page on your phone home screen for one-tap access at the rink.
     </div>
+  </div>
+</section>
+
+
+<!-- HOW TO USE -->
+<section class="panel" id="howto">
+  <h2 class="section-title">How to Use Your Command Centre</h2>
+  <p class="section-sub">Plain-English playbook for Tyler &amp; the Thrashers parent crew. Covers every tab, plus phone setup, backup, and privacy.</p>
+
+  <div class="howto-toolbar">
+    <button class="btn btn-primary" onclick="window.print()">📄 Save as PDF / Print</button>
+    <a class="btn btn-secondary" href="how-to-use.pdf" download>⬇ Download printed PDF</a>
+  </div>
+
+  <div class="howto-section">
+    <h3><span class="htn">START</span>Add this page to your phone</h3>
+    <p class="lead">First job — make this one tap from your home screen so you can pull it up rink-side without typing the URL.</p>
+    <ul>
+      <li><b>iPhone (Safari):</b> tap the share icon (square with arrow) → <b>Add to Home Screen</b> → name it "Thrashers HQ" → Add.</li>
+      <li><b>Android (Chrome):</b> tap the three-dot menu (top right) → <b>Add to Home screen</b> → confirm.</li>
+      <li>Now you have a one-tap shortcut. The page works once it has loaded the first time, even if signal is weak.</li>
+    </ul>
+    <div class="tip"><b>Heads up:</b> all your data lives in this browser only. Nothing is sent to any server. That means: if you clear your browser cache or wipe the phone, your roster and custom events vanish. Use the Backup button before you ever do that.</div>
+  </div>
+
+  <div class="howto-section">
+    <h3><span class="htn">🏆 TOURNAMENT</span>Every game, color-coded by age group</h3>
+    <p class="lead">This is the read-only big picture. Two tournaments are pre-loaded: <b>Lloydminster Brute Invite</b> and <b>Tradition Lives 2026</b> (Red Deer, May 15–18, all 5 Thrashers age groups).</p>
+    <ul>
+      <li>Each card shows the day, start time, opponent, and venue. The colored stripe on the left tells you the age group: <b style="color:#00D4FF">U11</b>, <b style="color:#22C55E">U13B</b>, <b style="color:#FF6B35">U15B</b>, <b style="color:#EC4899">U15F</b>, <b style="color:#A855F7">U17B</b>.</li>
+      <li>The little square next to the time is the opponent club's logo (auto-pulled). If a logo can't load, you see colored initials instead.</li>
+      <li>You can't edit these from the Tournament tab — they're the official schedule. Add your own events (practices, dryland) under the Schedule tab.</li>
+    </ul>
+  </div>
+
+  <div class="howto-section">
+    <h3><span class="htn">📅 SCHEDULE</span>Add practices, dryland, anything not in the tournament</h3>
+    <ul>
+      <li>Pick a date, time, type, and short title. Hit <b>Add</b>. Done.</li>
+      <li>Types: Practice, Game (Home), Game (Away), Dryland, Team Meeting, Team Bonding.</li>
+      <li>To remove an event, tap the <b>✕</b> on its card.</li>
+    </ul>
+    <div class="tip">Anything you add here also flows into Duties (so volunteers get assigned to your home games) and Slideshow (so you can build hype reels for any game).</div>
+  </div>
+
+  <div class="howto-section">
+    <h3><span class="htn">🏃 ROSTER</span>Players, parents, contact info</h3>
+    <ul>
+      <li>Add each player: jersey number, name, position. Add a parent name + phone for each.</li>
+      <li>Used by Duties (parent volunteer rotation) and Comms (group text drafts).</li>
+    </ul>
+  </div>
+
+  <div class="howto-section">
+    <h3><span class="htn">📤 TEAMLINKT</span>Copy a clean schedule out</h3>
+    <p class="lead">Three buttons that build a paste-ready text block of your schedule.</p>
+    <ul>
+      <li><b>Tournament Only</b> — just the tournament games (for the parent group text).</li>
+      <li><b>Custom Only</b> — your own added events (practices, dryland).</li>
+      <li><b>Everything</b> — combined.</li>
+      <li>Tap <b>Copy</b> → paste into TeamLinkt, email, or your group chat.</li>
+    </ul>
+  </div>
+
+  <div class="howto-section">
+    <h3><span class="htn">🎨 GRAPHICS</span>Matchup posters &amp; final-score graphics</h3>
+    <p class="lead">Generates a 1200×675 PNG that fits Instagram, Facebook, and TeamLinkt feeds.</p>
+    <ul>
+      <li>Pick a game from the dropdown.</li>
+      <li>Pick a type: Matchup Poster, Final Score (WIN), Final Score (LOSS), or Game Day Hype.</li>
+      <li>Hit <b>Generate</b> → preview shows on the right.</li>
+      <li><b>Download PNG</b> for socials, or <b>Download SVG</b> for crisp print.</li>
+    </ul>
+    <div class="tip">Long opponent names (like "Cranbrook Black Wolves U17") auto-stack onto two lines so they don't crash into the "VS" in the middle. Short names render full size.</div>
+  </div>
+
+  <div class="howto-section">
+    <h3><span class="htn">📱 SOCIAL</span>Captions, hashtags, post text</h3>
+    <ul>
+      <li>Pre-built caption templates: Game Day, Final Win, Final Loss.</li>
+      <li>Fill the blanks (opponent, score, star of the game) → tap Copy → paste into Instagram or Facebook.</li>
+    </ul>
+  </div>
+
+  <div class="howto-section">
+    <h3><span class="htn">💬 COMMS</span>Pre-written team texts</h3>
+    <ul>
+      <li>Reminder-style group text drafts for: heads-up before game day, post-game thank-you, schedule-change alert.</li>
+      <li>Tap Copy → paste into your team group text.</li>
+    </ul>
+  </div>
+
+  <div class="howto-section">
+    <h3><span class="htn">🥍 PRACTICE</span>Plan a session</h3>
+    <ul>
+      <li>Block out drills, dryland, scrimmage time.</li>
+      <li>Saves to your phone — pull it up at the rink while running practice.</li>
+    </ul>
+  </div>
+
+  <div class="howto-section">
+    <h3><span class="htn">🛡️ DUTIES</span>Parent volunteer auto-assigner</h3>
+    <p class="lead">Home games need 4 jobs filled (Score Sheet, Penalty Box, Shot Clock, Game Sheet). Away games need 2. Duties does the math.</p>
+    <ul>
+      <li>Round-robin fair rotation across your roster. Same parent doesn't get hit twice in a weekend.</li>
+      <li>Built-in <b>sms:</b> links — tap a name and your phone opens a pre-written text to that parent.</li>
+      <li>Manually re-assign if a parent can't make it — Duties picks up the gap next round.</li>
+    </ul>
+  </div>
+
+  <div class="howto-section">
+    <h3><span class="htn">🎬 SLIDESHOW</span>4-slide vertical hype reel per game</h3>
+    <p class="lead">1080×1920 (Instagram Story / TikTok format). Pick a game → builds 4 slides automatically:</p>
+    <ul>
+      <li><b>Hype</b> — bold "GAME DAY" splash with team name.</li>
+      <li><b>Matchup</b> — Thrashers vs Opponent, US / THEM labels, big VS in the middle.</li>
+      <li><b>Time / Place</b> — when and where.</li>
+      <li><b>GO Thrashers!</b> — closer.</li>
+    </ul>
+    <ul>
+      <li><b>Download all</b> — saves all 4 slides as PNGs in one tap.</li>
+      <li><b>Download one</b> — pick a single slide.</li>
+      <li>Long opponent names wrap onto two lines automatically.</li>
+    </ul>
+  </div>
+
+  <div class="howto-section">
+    <h3><span class="htn">🔔 WATCH</span>Schedule-change log + parent alert</h3>
+    <ul>
+      <li>When TeamLinkt or the league moves a game time, log it here with a one-line note.</li>
+      <li>Watch builds a clean parent-text alert with the old time, new time, venue, and reason.</li>
+      <li>Tap Copy → paste into the team group text.</li>
+    </ul>
+    <div class="tip">Auto-monitoring of TeamLinkt for changes is a Phase 2 feature — needs a server to run between visits. Right now Watch is manual log-only.</div>
+  </div>
+
+  <div class="howto-section">
+    <h3><span class="htn">🎒 TRIP KIT</span>Pre-tournament travel checklist</h3>
+    <ul>
+      <li>Standard tournament-trip packing list. Editable.</li>
+      <li>Phone-friendly — open it the morning of departure, tick items as you load the car.</li>
+    </ul>
+  </div>
+
+  <div class="howto-section">
+    <h3><span class="htn">⚙️ SETUP</span>Team colors, name, settings</h3>
+    <ul>
+      <li>Set your team's two colors — they drive the gradient on every Graphics + Slideshow image.</li>
+      <li>Short team name (e.g. "GP Thrashers") used on graphics.</li>
+      <li><b>Backup button</b> — saves a JSON file with your full roster + events. <b>Email this to yourself once a week.</b></li>
+      <li><b>Restore button</b> — load a backup file back into the page.</li>
+    </ul>
+    <div class="tip"><b>Important:</b> if you switch phones or browsers, your data does NOT travel automatically. Backup → email file to yourself → restore on the new device.</div>
+  </div>
+
+  <div class="howto-section">
+    <h3><span class="htn">🔒 PRIVACY</span>Where does my data go?</h3>
+    <ul>
+      <li>Nowhere except your browser. There's no account, no login, no server collecting roster info.</li>
+      <li>The page is hosted on GitHub Pages (static HTML / CSS / JS). It's served over HTTPS so the connection is secure.</li>
+      <li>Team logos shown next to each game come from a Google favicon proxy — your browser fetches them at load time, no data sent the other way.</li>
+      <li>Clearing your browser's site data for tyler.quadfang.com erases your roster + custom events. Always Backup first.</li>
+    </ul>
+  </div>
+
+  <div class="howto-section">
+    <h3><span class="htn">🆘 NEED HELP</span>Something off? Page broken?</h3>
+    <ul>
+      <li>Talk to <b>Alessio at AZ Custom Knives</b> — admin@azcustomknives.com.</li>
+      <li>Built free for Tyler. No hidden costs, no ads, no upsell. Just a friendly trade for the lacrosse parent life. 🥍</li>
+    </ul>
   </div>
 </section>
 
@@ -1074,13 +1271,52 @@ function renderGraphic(){
   }
   document.getElementById('svgPreview').innerHTML = svg;
 }
-// fitAttr — returns ` textLength="..." lengthAdjust="spacingAndGlyphs"` ONLY when
-// the text is wider than maxWidth at the given fontSize. Bebas Neue / Impact /
-// Oswald are condensed, so ~0.48 of fontSize per character is a safe average.
-function fitAttr(text, maxWidth, fontSize, charRatio){
-  const r = (typeof charRatio === 'number') ? charRatio : 0.48;
-  const est = String(text||'').length * fontSize * r;
-  return est > maxWidth ? ` textLength="${maxWidth}" lengthAdjust="spacingAndGlyphs"` : '';
+// fittedText — returns one or two <text> elements depending on how the text fits:
+//   short  -> single <text> at full fontSize, no constraint
+//   1-word long -> single <text> with textLength compression (squeezed to fit)
+//   multi-word long -> TWO <text> lines, balanced split, smaller fontSize, centered on original y
+// Saves callers from manually deciding between compress vs wrap.
+function fittedText(o){
+  const x = o.x, y = o.y;
+  const anchor = o.anchor || 'middle';
+  const family = o.family || 'Bebas Neue, Impact, sans-serif';
+  const fs = o.fontSize;
+  const fill = o.fill;
+  const ls = o.letterSpacing;
+  const extra = o.extra || '';
+  const wrap = (o.wrap === undefined) ? true : o.wrap;
+  const maxW = o.maxWidth;
+  const t = String(o.text == null ? '' : o.text);
+  const charR = 0.48;
+  const lsN = ls ? Number(ls) : 0;
+  const lsAttr = ls ? ` letter-spacing="${ls}"` : '';
+  const fillAttr = ` fill="${fill}"`;
+  const est = t.length * fs * charR + Math.max(0, t.length - 1) * lsN;
+  if(est <= maxW){
+    return `<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="${family}" font-size="${fs}"${fillAttr}${lsAttr}${extra}>${t}</text>`;
+  }
+  const words = t.trim().split(/\s+/);
+  if(wrap && words.length >= 2){
+    // balanced split closest to middle
+    let bestIdx = 1, bestDiff = Infinity;
+    for(let i=1; i<words.length; i++){
+      const a = words.slice(0,i).join(' ');
+      const b = words.slice(i).join(' ');
+      const diff = Math.abs(a.length - b.length);
+      if(diff < bestDiff){ bestDiff = diff; bestIdx = i; }
+    }
+    const l1 = words.slice(0, bestIdx).join(' ');
+    const l2 = words.slice(bestIdx).join(' ');
+    const fs2 = Math.round(fs * 0.65);
+    const gap = Math.round(fs2 * 1.05);
+    const y1 = y - Math.round(gap/2 + 4);
+    const y2 = y + Math.round(gap/2 + 8);
+    const compress = (s) => (s.length * fs2 * charR + Math.max(0, s.length-1) * lsN) > maxW
+      ? ` textLength="${maxW}" lengthAdjust="spacingAndGlyphs"` : '';
+    return `<text x="${x}" y="${y1}" text-anchor="${anchor}" font-family="${family}" font-size="${fs2}"${fillAttr}${lsAttr}${extra}${compress(l1)}>${l1}</text><text x="${x}" y="${y2}" text-anchor="${anchor}" font-family="${family}" font-size="${fs2}"${fillAttr}${lsAttr}${extra}${compress(l2)}>${l2}</text>`;
+  }
+  // single word over budget — compress
+  return `<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="${family}" font-size="${fs}"${fillAttr}${lsAttr}${extra} textLength="${maxW}" lengthAdjust="spacingAndGlyphs">${t}</text>`;
 }
 function matchupSvg({c1,c2,team,opp,time,day,loc,heading}){
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%">
@@ -1104,14 +1340,14 @@ function matchupSvg({c1,c2,team,opp,time,day,loc,heading}){
     <line x1="0" y1="40" x2="1200" y2="40" stroke="${c2}" stroke-width="3"/>
     <line x1="0" y1="635" x2="1200" y2="635" stroke="${c1}" stroke-width="3"/>
     <text x="600" y="100" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="48" fill="#FFC857" letter-spacing="8">${heading}</text>
-    <text x="300" y="290" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="84" fill="#fff"${fitAttr(team, 480, 84)}>${team}</text>
+    ${fittedText({x:300, y:290, text:team, maxWidth:480, fontSize:84, fill:'#fff'})}
     <text x="300" y="340" text-anchor="middle" font-family="Oswald, sans-serif" font-size="22" fill="${c1}" letter-spacing="4">HOME</text>
     <text x="600" y="320" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="120" fill="#FFC857">VS</text>
-    <text x="900" y="290" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="84" fill="#fff"${fitAttr(opp, 480, 84)}>${opp}</text>
+    ${fittedText({x:900, y:290, text:opp, maxWidth:480, fontSize:84, fill:'#fff'})}
     <text x="900" y="340" text-anchor="middle" font-family="Oswald, sans-serif" font-size="22" fill="${c2}" letter-spacing="4">AWAY</text>
     <rect x="200" y="430" width="800" height="2" fill="${c2}" opacity="0.4"/>
     <text x="600" y="500" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="56" fill="#fff">${day.toUpperCase()} · ${time}</text>
-    <text x="600" y="555" text-anchor="middle" font-family="Oswald, sans-serif" font-size="26" fill="#8A95B5" letter-spacing="2"${fitAttr(loc, 1100, 26)}>${loc.toUpperCase()}</text>
+    ${fittedText({x:600, y:555, text:loc.toUpperCase(), maxWidth:1100, fontSize:26, family:'Oswald, sans-serif', fill:'#8A95B5', letterSpacing:'2', wrap:false})}
     <text x="600" y="610" text-anchor="middle" font-family="Oswald, sans-serif" font-size="16" fill="${c1}" letter-spacing="6">GO THRASHERS</text>
   </svg>`;
 }
@@ -1130,10 +1366,10 @@ function resultSvg({c1,c2,team,opp,ours,theirs,won,day,loc}){
     <line x1="0" y1="635" x2="1200" y2="635" stroke="${headColor}" stroke-width="3"/>
     <text x="600" y="110" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="64" fill="${headColor}" letter-spacing="12">${headline}</text>
     <text x="600" y="160" text-anchor="middle" font-family="Oswald, sans-serif" font-size="20" fill="#8A95B5" letter-spacing="6">FINAL · ${day.toUpperCase()}</text>
-    <text x="300" y="320" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="72" fill="#fff"${fitAttr(team, 480, 72)}>${team}</text>
+    ${fittedText({x:300, y:320, text:team, maxWidth:480, fontSize:72, fill:'#fff'})}
     <text x="300" y="470" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="180" fill="${c1}">${ours||'—'}</text>
     <text x="600" y="430" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="100" fill="#FFC857">—</text>
-    <text x="900" y="320" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="72" fill="#fff"${fitAttr(opp, 480, 72)}>${opp}</text>
+    ${fittedText({x:900, y:320, text:opp, maxWidth:480, fontSize:72, fill:'#fff'})}
     <text x="900" y="470" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="180" fill="${c2}">${theirs||'—'}</text>
     <text x="600" y="565" text-anchor="middle" font-family="Oswald, sans-serif" font-size="22" fill="#8A95B5" letter-spacing="3">${loc.toUpperCase()}</text>
     <text x="600" y="610" text-anchor="middle" font-family="Oswald, sans-serif" font-size="16" fill="${c1}" letter-spacing="6">#GOTHRASHERS</text>
@@ -1796,10 +2032,10 @@ function slideMatchup({c1,c2,team,opp,isHome}){
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="100%" style="aspect-ratio:9/16">
     ${slideBg(c1,c2)}
     <text x="540" y="380" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="64" fill="#FFC857" letter-spacing="12">${isHome?'HOME':'AWAY'}</text>
-    <text x="540" y="650" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="120" fill="#fff"${fitAttr(team, 940, 120)}>${team}</text>
+    ${fittedText({x:540, y:650, text:team, maxWidth:940, fontSize:120, fill:'#fff'})}
     <text x="540" y="720" text-anchor="middle" font-family="Oswald, sans-serif" font-size="28" fill="${c1}" letter-spacing="6">US</text>
     <text x="540" y="1000" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="200" fill="#FFC857">VS</text>
-    <text x="540" y="1280" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="120" fill="#fff"${fitAttr(opp, 940, 120)}>${opp}</text>
+    ${fittedText({x:540, y:1280, text:opp, maxWidth:940, fontSize:120, fill:'#fff'})}
     <text x="540" y="1350" text-anchor="middle" font-family="Oswald, sans-serif" font-size="28" fill="${c2}" letter-spacing="6">THEM</text>
   </svg>`;
 }
@@ -1811,14 +2047,14 @@ function slideTime({c1,c2,day,time,loc}){
     <text x="540" y="850" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="160" fill="#FFC857">${time}</text>
     <rect x="240" y="950" width="600" height="4" fill="${c1}"/>
     <text x="540" y="1150" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="80" fill="${c2}" letter-spacing="12">WHERE</text>
-    <text x="540" y="1320" text-anchor="middle" font-family="Oswald, sans-serif" font-size="56" fill="#fff" letter-spacing="3"${fitAttr(loc, 1000, 56)}>${loc.toUpperCase()}</text>
+    ${fittedText({x:540, y:1320, text:loc.toUpperCase(), maxWidth:1000, fontSize:56, family:'Oswald, sans-serif', fill:'#fff', letterSpacing:'3'})}
   </svg>`;
 }
 function slideGo({c1,c2,team}){
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="100%" style="aspect-ratio:9/16">
     ${slideBg(c1,c2)}
     <text x="540" y="800" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="220" fill="${c1}" letter-spacing="20">GO</text>
-    <text x="540" y="1050" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="180" fill="#fff" letter-spacing="8"${fitAttr(team, 940, 180, 0.55)}>${team}</text>
+    ${fittedText({x:540, y:1050, text:team, maxWidth:940, fontSize:180, fill:'#fff', letterSpacing:'8'})}
     <rect x="240" y="1130" width="600" height="6" fill="${c2}"/>
     <text x="540" y="1300" text-anchor="middle" font-family="Oswald, sans-serif" font-size="36" fill="#FFC857" letter-spacing="8">#GOTHRASHERS</text>
     <text x="540" y="1700" text-anchor="middle" font-family="Oswald, sans-serif" font-size="22" fill="${c2}" letter-spacing="6">SEE YOU AT THE RINK</text>
