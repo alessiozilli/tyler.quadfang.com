@@ -144,6 +144,11 @@ main{max-width:1200px;margin:0 auto;padding:24px 16px 80px}
 .event-actions button:hover{background:var(--ice);color:var(--ink)}
 .event-actions .del{color:var(--red);background:rgba(239,68,68,.1)}
 .event-actions .del:hover{background:var(--red);color:#fff}
+/* Team logo / badge — appears on game-home / game-away / tbd cards */
+.event.has-logo{grid-template-columns:46px 90px 1fr auto}
+.team-logo-cell{width:46px;height:46px;display:flex;align-items:center;justify-content:center;position:relative}
+.team-logo{width:36px;height:36px;border-radius:8px;background:#fff;padding:3px;object-fit:contain;display:block;box-shadow:0 0 0 1px var(--line)}
+.team-badge{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Oswald';font-weight:700;font-size:11px;letter-spacing:.04em;box-shadow:0 0 0 1px rgba(255,255,255,.15)}
 
 /* BUTTONS */
 .btn{
@@ -255,7 +260,10 @@ footer .signature{color:var(--gold);font-family:'Oswald';font-weight:600;letter-
 /* RESPONSIVE */
 @media (max-width:600px){
   .event{grid-template-columns:70px 1fr;gap:10px}
+  .event.has-logo{grid-template-columns:40px 70px 1fr;gap:10px}
   .event-actions{grid-column:1/-1;margin-top:6px}
+  .team-logo-cell{width:40px;height:40px}
+  .team-logo,.team-badge{width:32px;height:32px}
   h1{font-size:36px}
   .section-title{font-size:24px}
 }
@@ -764,6 +772,47 @@ function renderTournament(){
     list.appendChild(eventCard(e, 'tournament'));
   });
 }
+// ============= TEAM LOGOS / BADGES =============
+// Hotlinked favicons (Google s2 service) with colored-badge fallback. No copyrighted
+// art is rehosted — browser pulls live from each club's domain via Google's proxy.
+const TEAM_LOGOS = [
+  {match:'thrasher',          name:'GP Thrashers',           domain:'gplacrosse.com',           color:'#1e3a8a', init:'GP'},
+  {match:'brooks',            name:'Brooks Drillers',        domain:'southernalbertalacrosse.com', color:'#dc2626', init:'BR'},
+  {match:'red deer chiefs',   name:'Red Deer Chiefs',        domain:'reddeerlacrosse.com',      color:'#b91c1c', init:'RC'},
+  {match:'axemen',            name:'Calgary Axemen',         domain:'axemenlacrosse.com',       color:'#16a34a', init:'AX'},
+  {match:'hornets',           name:'Calgary Hornets',        domain:'hornetslacrosse.com',      color:'#f59e0b', init:'HO'},
+  {match:'fury',              name:'Calgary Fury',           domain:'furylacrosse.ca',          color:'#7c3aed', init:'FU'},
+  {match:'cranbrook',         name:'Cranbrook Blackwolves',  domain:'cranbrooklacrosse.com',    color:'#1f2937', init:'CB'},
+  {match:'edmonton warrior',  name:'Edmonton Warriors',      domain:'warriorslacrosse.ca',      color:'#991b1b', init:'EW'},
+  {match:'innisfail',         name:'Innisfail Phantoms',     domain:'innisfaillacrosse.com',    color:'#6d28d9', init:'IP'},
+  {match:'sundevil',          name:'Medicine Hat SunDevils', domain:'medicinehatlacrosse.com',  color:'#eab308', init:'MH'},
+  {match:'lakeland',          name:'Lakeland Heat',          domain:'lakelandlacrosse.ca',      color:'#ea580c', init:'LH'},
+  {match:'lloyd brutes',      name:'Lloyd Brutes',           domain:'lloydminsterlacrosse.com', color:'#0c4a6e', init:'LB'},
+  {match:'posse',             name:'Posse',                  domain:'calgarylacrosse.com',      color:'#65a30d', init:'PO'},
+  {match:'rams',              name:'St. Albert Rams',        domain:'ramslacrosse.ca',          color:'#0e7490', init:'RA'},
+  {match:'rage',              name:'Rockyview Rage',         domain:'rockyviewlacrosse.com',    color:'#15803d', init:'RR'},
+  {match:'crush',             name:'Crush',                  domain:'gelc.ab.ca',               color:'#be185d', init:'CR'}
+];
+function findTeam(title){
+  const t = String(title||'').toLowerCase();
+  // Opponent comes after "vs " — match opponent first, fall back to anything in title
+  const after = (t.split(/\bvs\b/)[1] || t).trim();
+  return TEAM_LOGOS.find(x => after.includes(x.match))
+      || TEAM_LOGOS.find(x => t.includes(x.match));
+}
+function teamLogoHtml(title){
+  const team = findTeam(title);
+  if(!team){
+    return `<div class="team-logo-cell" title="Opponent — TBD"><div class="team-badge" style="background:#475569">?</div></div>`;
+  }
+  const favUrl = `https://www.google.com/s2/favicons?domain=${team.domain}&sz=64`;
+  const safeName = escapeHtml(team.name);
+  return `<div class="team-logo-cell" title="${safeName}">
+    <img class="team-logo" src="${favUrl}" alt="${safeName}" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+    <div class="team-badge" style="background:${team.color};display:none">${team.init}</div>
+  </div>`;
+}
+
 function eventCard(e, listKey){
   const el = document.createElement('div');
   el.className = 'event '+ (e.type||'');
@@ -771,8 +820,12 @@ function eventCard(e, listKey){
   if(e.type==='bonding') el.classList.add('bonding');
   if(e.type==='curfew') el.classList.add('curfew');
   if(e.type==='tbd') el.classList.add('tbd');
+  const showLogo = ['game-home','game-away','tbd'].includes(e.type);
+  if(showLogo) el.classList.add('has-logo');
+  const logoHtml = showLogo ? teamLogoHtml(e.title) : '';
   const f = fmtTime(e.time);
   el.innerHTML = `
+    ${logoHtml}
     <div class="event-time">
       <div class="day">${e.day||''}</div>
       <div class="hr">${f?f.hr:''}</div>
