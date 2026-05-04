@@ -3,7 +3,7 @@
 **Built:** 2026-05-04 by forge-cowork Sonnet 4.6
 **Mission:** Public command centre for Tyler.
 **Target domain:** `tyler.quadfang.com`
-**Repo:** `azcustomknives/tyler.quadfang.com` (GitHub Pages, public)
+**Repo:** `alessiozilli/tyler.quadfang.com` (GitHub Pages, public)
 
 ## Source of truth
 
@@ -13,8 +13,8 @@
 
 ## Deployment plan
 
-1. **forge-code on beast** — `gh repo create azcustomknives/tyler.quadfang.com --public --source=. --push`, with `index.html` + `CNAME` (containing `tyler.quadfang.com`), enable GH Pages on `main` branch root.
-2. **Alessio (manual)** — DNS for `quadfang.com` lives at **Google Domains / Squarespace**, NOT Wix. Add CNAME record: `tyler` → `azcustomknives.github.io`.
+1. **forge-code on beast** — `gh repo create alessiozilli/tyler.quadfang.com --public --source=. --push`, with `index.html` + `CNAME` (containing `tyler.quadfang.com`), enable GH Pages on `main` branch root.
+2. **Alessio (manual)** — DNS for `quadfang.com` lives at **Google Domains / Squarespace**, NOT Wix. Add CNAME record: `tyler` → `alessiozilli.github.io`.
 3. **Verify** — `https://tyler.quadfang.com` resolves and serves the page within 24h. HTTPS auto-issues via GH Pages Let's Encrypt once domain verified.
 
 ## Bus dispatch
