@@ -1,0 +1,1422 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Thrashers HQ — Tyler's Command Centre</title>
+<meta name="description" content="Grande Prairie Thrashers U15 Co-Ed — manager command centre">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#05080F;
+  --rink:#0A1228;
+  --board:#0F1A38;
+  --line:#1A2954;
+  --ice:#00D4FF;
+  --ice-dim:rgba(0,212,255,.15);
+  --fire:#FF6B35;
+  --fire-dim:rgba(255,107,53,.12);
+  --gold:#FFC857;
+  --green:#22C55E;
+  --red:#EF4444;
+  --text:#F5F7FA;
+  --mute:#8A95B5;
+  --shadow:0 10px 40px rgba(0,0,0,.5);
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--ink);color:var(--text);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+body{
+  background:
+    radial-gradient(ellipse 1200px 800px at 50% -200px, rgba(0,212,255,.12), transparent 60%),
+    radial-gradient(ellipse 800px 600px at 80% 100%, rgba(255,107,53,.08), transparent 60%),
+    linear-gradient(180deg, var(--ink) 0%, var(--rink) 100%);
+  background-attachment:fixed;
+}
+/* Rink line decorative top */
+body::before{
+  content:"";position:fixed;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg, var(--ice) 0%, var(--fire) 50%, var(--ice) 100%);
+  z-index:1000;box-shadow:0 0 20px rgba(0,212,255,.5);
+}
+.scoreboard-font{font-family:'Bebas Neue','Impact',sans-serif;letter-spacing:.04em}
+.sport-font{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.02em}
+
+/* HEADER */
+header{
+  position:relative;padding:28px 20px 24px;
+  background:linear-gradient(180deg, rgba(15,26,56,.9) 0%, rgba(10,18,40,.6) 100%);
+  border-bottom:1px solid var(--line);
+  text-align:center;
+}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:8px}
+.crest{
+  width:84px;height:84px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, var(--fire), #C2410C 70%);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 40px rgba(255,107,53,.4), inset 0 -8px 16px rgba(0,0,0,.4);
+  border:3px solid var(--gold);
+  font-family:'Bebas Neue';font-size:42px;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.5);
+}
+h1{font-family:'Bebas Neue';font-size:clamp(38px,7vw,64px);letter-spacing:.06em;line-height:1;margin-top:6px}
+h1 .accent{color:var(--ice);text-shadow:0 0 20px rgba(0,212,255,.4)}
+.subtitle{color:var(--mute);font-size:14px;text-transform:uppercase;letter-spacing:.25em;font-weight:600}
+.tagline{color:var(--gold);font-family:'Oswald';font-size:13px;text-transform:uppercase;letter-spacing:.2em;margin-top:4px}
+
+/* TABS */
+.tabs{
+  position:sticky;top:0;z-index:50;
+  background:rgba(5,8,15,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+  padding:8px 0;
+}
+.tab-strip{
+  max-width:1200px;margin:0 auto;display:flex;gap:4px;overflow-x:auto;
+  padding:0 12px;scrollbar-width:none;
+}
+.tab-strip::-webkit-scrollbar{display:none}
+.tab{
+  flex:0 0 auto;padding:12px 18px;background:transparent;border:none;color:var(--mute);cursor:pointer;
+  font-family:'Oswald';font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;
+  border-radius:8px;transition:all .2s;display:flex;align-items:center;gap:8px;white-space:nowrap;
+}
+.tab:hover{color:var(--text);background:var(--ice-dim)}
+.tab.active{color:var(--ice);background:var(--ice-dim);box-shadow:inset 0 -2px 0 var(--ice)}
+.tab .ic{font-size:16px}
+
+/* MAIN */
+main{max-width:1200px;margin:0 auto;padding:24px 16px 80px}
+.panel{display:none;animation:fade .3s ease}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.section-title{
+  font-family:'Bebas Neue';font-size:28px;letter-spacing:.06em;margin-bottom:6px;
+  display:flex;align-items:center;gap:12px;
+}
+.section-title::before{content:"";width:4px;height:28px;background:var(--fire);border-radius:2px}
+.section-sub{color:var(--mute);font-size:13px;margin-bottom:20px}
+
+/* CARDS */
+.card{
+  background:linear-gradient(180deg, rgba(15,26,56,.7) 0%, rgba(10,18,40,.5) 100%);
+  border:1px solid var(--line);border-radius:14px;padding:18px;
+  box-shadow:var(--shadow);position:relative;overflow:hidden;
+}
+.card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg, var(--ice), transparent);opacity:.6;
+}
+
+/* SCHEDULE / TOURNAMENT */
+.event-grid{display:grid;gap:14px}
+.event{
+  background:linear-gradient(135deg, rgba(15,26,56,.9) 0%, rgba(10,18,40,.7) 100%);
+  border:1px solid var(--line);border-left:4px solid var(--ice);
+  border-radius:12px;padding:16px;display:grid;
+  grid-template-columns:90px 1fr auto;gap:16px;align-items:center;
+  transition:all .2s;
+}
+.event:hover{border-color:var(--ice);transform:translateX(2px)}
+.event.away{border-left-color:var(--fire)}
+.event.bonding{border-left-color:var(--gold)}
+.event.curfew{border-left-color:var(--mute);opacity:.7}
+.event.tbd{border-left-color:var(--red);border-style:dashed}
+.event-time{
+  text-align:center;font-family:'Bebas Neue';
+}
+.event-time .day{font-size:11px;color:var(--mute);letter-spacing:.15em}
+.event-time .hr{font-size:24px;color:var(--ice);line-height:1}
+.event-time .ampm{font-size:11px;color:var(--mute)}
+.event.away .event-time .hr{color:var(--fire)}
+.event-detail{}
+.event-title{font-family:'Oswald';font-size:16px;font-weight:600;letter-spacing:.02em}
+.event-meta{color:var(--mute);font-size:12px;margin-top:4px;display:flex;gap:12px;flex-wrap:wrap}
+.event-meta span{display:flex;align-items:center;gap:4px}
+.event-actions{display:flex;gap:6px}
+.event-actions button{
+  background:var(--ice-dim);border:1px solid var(--line);color:var(--ice);
+  border-radius:6px;padding:6px 10px;font-size:11px;font-family:'Oswald';
+  cursor:pointer;transition:all .15s;letter-spacing:.05em;text-transform:uppercase;
+}
+.event-actions button:hover{background:var(--ice);color:var(--ink)}
+.event-actions .del{color:var(--red);background:rgba(239,68,68,.1)}
+.event-actions .del:hover{background:var(--red);color:#fff}
+
+/* BUTTONS */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;padding:12px 20px;
+  font-family:'Oswald';font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;
+  border:none;border-radius:10px;cursor:pointer;transition:all .15s;
+}
+.btn-primary{background:linear-gradient(135deg, var(--fire), #E04A1B);color:#fff;box-shadow:0 4px 16px rgba(255,107,53,.4)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,107,53,.5)}
+.btn-secondary{background:var(--ice-dim);color:var(--ice);border:1px solid var(--line)}
+.btn-secondary:hover{background:var(--ice);color:var(--ink)}
+.btn-ghost{background:transparent;color:var(--mute);border:1px dashed var(--line)}
+.btn-ghost:hover{color:var(--ice);border-color:var(--ice)}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+
+/* FORMS */
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:14px}
+label{display:block;font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;font-weight:600}
+input,select,textarea{
+  width:100%;padding:10px 12px;background:var(--ink);border:1px solid var(--line);
+  color:var(--text);border-radius:8px;font-family:inherit;font-size:14px;transition:border-color .15s;
+}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ice);box-shadow:0 0 0 3px rgba(0,212,255,.1)}
+textarea{min-height:100px;resize:vertical;font-family:'Inter',sans-serif}
+
+/* ROSTER */
+.roster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.player{
+  background:linear-gradient(180deg, rgba(15,26,56,.8), rgba(10,18,40,.6));
+  border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;
+  position:relative;
+}
+.jersey{
+  width:54px;height:54px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, var(--fire), #C2410C);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  font-family:'Bebas Neue';font-size:24px;color:#fff;
+  box-shadow:0 4px 12px rgba(255,107,53,.3);border:2px solid var(--gold);
+}
+.player-info{flex:1;min-width:0}
+.player-name{font-family:'Oswald';font-size:15px;font-weight:600}
+.player-meta{font-size:11px;color:var(--mute);margin-top:2px}
+.player-del{
+  background:rgba(239,68,68,.15);color:var(--red);border:none;border-radius:6px;
+  padding:4px 8px;font-size:11px;cursor:pointer;
+}
+.empty{
+  text-align:center;padding:40px 20px;color:var(--mute);
+  border:1px dashed var(--line);border-radius:12px;
+}
+
+/* OUTPUT BOXES */
+.output-box{
+  background:var(--ink);border:1px solid var(--line);border-radius:10px;
+  padding:14px;font-family:'Courier New',monospace;font-size:13px;line-height:1.6;
+  white-space:pre-wrap;color:var(--ice);min-height:100px;max-height:400px;overflow:auto;
+}
+.copy-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.copy-status{font-size:11px;color:var(--green);opacity:0;transition:opacity .2s}
+.copy-status.show{opacity:1}
+
+/* GRAPHICS PREVIEW */
+.svg-preview{
+  background:var(--ink);border:1px solid var(--line);border-radius:12px;
+  padding:14px;display:flex;justify-content:center;margin-bottom:14px;overflow:auto;
+}
+.svg-preview svg{max-width:100%;height:auto}
+
+/* TEMPLATE PICKER */
+.template-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.pill{
+  padding:8px 14px;background:var(--ice-dim);border:1px solid var(--line);color:var(--ice);
+  border-radius:20px;font-family:'Oswald';font-size:12px;cursor:pointer;text-transform:uppercase;
+  letter-spacing:.05em;transition:all .15s;
+}
+.pill:hover,.pill.active{background:var(--ice);color:var(--ink)}
+
+/* CHECKLIST */
+.check-group{margin-bottom:18px}
+.check-group h3{font-family:'Oswald';font-size:14px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.check{display:flex;align-items:center;gap:10px;padding:8px 4px;font-size:14px;cursor:pointer}
+.check input{width:18px;height:18px;accent-color:var(--ice);cursor:pointer}
+.check.done{color:var(--mute);text-decoration:line-through}
+
+/* SETTINGS */
+.color-input{display:flex;gap:8px;align-items:center}
+.color-input input[type=color]{width:48px;height:36px;padding:2px;cursor:pointer}
+
+/* GRID 2 col */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:720px){.grid-2{grid-template-columns:1fr}}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);
+  background:var(--green);color:#fff;padding:12px 20px;border-radius:10px;
+  font-family:'Oswald';font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:13px;
+  box-shadow:0 8px 24px rgba(0,0,0,.5);z-index:200;transition:transform .25s ease;
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* FOOTER */
+footer{
+  text-align:center;padding:32px 20px;color:var(--mute);font-size:12px;
+  border-top:1px solid var(--line);margin-top:40px;
+}
+footer .signature{color:var(--gold);font-family:'Oswald';font-weight:600;letter-spacing:.05em;margin-top:4px}
+
+/* RESPONSIVE */
+@media (max-width:600px){
+  .event{grid-template-columns:70px 1fr;gap:10px}
+  .event-actions{grid-column:1/-1;margin-top:6px}
+  h1{font-size:36px}
+  .section-title{font-size:24px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="crest" id="crest">T</div>
+    <div class="subtitle">Grande Prairie · U15 Co-Ed · 2026</div>
+    <h1>THRASHERS <span class="accent">HQ</span></h1>
+    <div class="tagline">Manager Command Centre · Tyler Pederson</div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tab-strip" id="tabStrip">
+    <button class="tab active" data-tab="tournament"><span class="ic">🏆</span>Tournament</button>
+    <button class="tab" data-tab="schedule"><span class="ic">📅</span>Schedule</button>
+    <button class="tab" data-tab="roster"><span class="ic">🏃</span>Roster</button>
+    <button class="tab" data-tab="export"><span class="ic">📤</span>TeamLinkt</button>
+    <button class="tab" data-tab="graphics"><span class="ic">🎨</span>Graphics</button>
+    <button class="tab" data-tab="social"><span class="ic">📱</span>Social</button>
+    <button class="tab" data-tab="comms"><span class="ic">💬</span>Comms</button>
+    <button class="tab" data-tab="practice"><span class="ic">🥍</span>Practice</button>
+    <button class="tab" data-tab="trip"><span class="ic">🎒</span>Trip Kit</button>
+    <button class="tab" data-tab="settings"><span class="ic">⚙️</span>Setup</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- TOURNAMENT -->
+<section class="panel active" id="tournament">
+  <h2 class="section-title">Tournament Weekend</h2>
+  <p class="section-sub">RJ Lalonde Arena, Lloydminster · 10 teams, top 4 play Sunday · Pre-loaded from your sheet.</p>
+
+  <div class="card" style="margin-bottom:18px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px">
+      <div><div style="font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:.1em">Host</div><div class="sport-font" style="font-size:16px;margin-top:2px">Lloyd Brutes</div></div>
+      <div><div style="font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:.1em">Venue</div><div class="sport-font" style="font-size:16px;margin-top:2px">RJ Lalonde Arena</div></div>
+      <div><div style="font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:.1em">Sunday Venue</div><div class="sport-font" style="font-size:16px;margin-top:2px">C2 Cenovus</div></div>
+      <div><div style="font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:.1em">Format</div><div class="sport-font" style="font-size:16px;margin-top:2px">Top 4 → Sunday</div></div>
+    </div>
+  </div>
+
+  <div class="event-grid" id="tournamentList"></div>
+
+  <div style="margin-top:20px;padding:16px;background:var(--fire-dim);border:1px dashed var(--fire);border-radius:10px">
+    <div class="sport-font" style="color:var(--fire);font-size:14px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">⚠ Missing data</div>
+    <div style="font-size:13px;color:var(--text);line-height:1.6">Friday Game 1 + full 10-team bracket got cropped from the sheet. Send a screenshot to Alessio and we'll add them in. The TeamLinkt export tab already covers everything below.</div>
+  </div>
+</section>
+
+<!-- SCHEDULE (custom events) -->
+<section class="panel" id="schedule">
+  <h2 class="section-title">Custom Events</h2>
+  <p class="section-sub">Practices, dryland, team meetings, anything not in the tournament block.</p>
+
+  <div class="card" style="margin-bottom:18px">
+    <div class="form-grid">
+      <div><label>Title</label><input id="evt-title" placeholder="Practice"></div>
+      <div><label>Date</label><input type="date" id="evt-date"></div>
+      <div><label>Start Time</label><input type="time" id="evt-time"></div>
+      <div><label>Type</label><select id="evt-type"><option value="practice">Practice</option><option value="game-home">Game (Home)</option><option value="game-away">Game (Away)</option><option value="dryland">Dryland</option><option value="meeting">Team Meeting</option><option value="bonding">Team Bonding</option></select></div>
+      <div style="grid-column:span 2"><label>Location</label><input id="evt-loc" placeholder="Wembley Rec Centre"></div>
+    </div>
+    <div><label>Notes (optional)</label><input id="evt-notes" placeholder="Bring water bottles"></div>
+    <div style="margin-top:12px"><button class="btn btn-primary" onclick="addCustomEvent()">+ Add Event</button></div>
+  </div>
+
+  <div class="event-grid" id="customList"></div>
+</section>
+
+<!-- ROSTER -->
+<section class="panel" id="roster">
+  <h2 class="section-title">Roster</h2>
+  <p class="section-sub">Player + parent contact. Saved on this device only.</p>
+
+  <div class="card" style="margin-bottom:18px">
+    <div class="form-grid">
+      <div><label>Jersey #</label><input type="number" id="p-num" min="0" max="99"></div>
+      <div><label>First Name</label><input id="p-first"></div>
+      <div><label>Last Name</label><input id="p-last"></div>
+      <div><label>Position</label><select id="p-pos"><option>Forward</option><option>Defence</option><option>Transition</option><option>Goalie</option></select></div>
+      <div><label>Birthday</label><input type="date" id="p-bday"></div>
+      <div><label>Parent Name</label><input id="p-parent"></div>
+      <div><label>Parent Phone</label><input type="tel" id="p-phone" placeholder="780-555-1234"></div>
+      <div><label>Parent Email</label><input type="email" id="p-email"></div>
+    </div>
+    <div style="margin-top:12px"><button class="btn btn-primary" onclick="addPlayer()">+ Add Player</button></div>
+  </div>
+
+  <div class="roster-grid" id="rosterList"></div>
+</section>
+
+<!-- TEAMLINKT EXPORT -->
+<section class="panel" id="export">
+  <h2 class="section-title">TeamLinkt Export</h2>
+  <p class="section-sub">One paste-ready block per event. Open TeamLinkt → Add Event → paste into the right fields.</p>
+
+  <div class="btn-row">
+    <button class="btn btn-secondary" onclick="buildExport('tournament')">📋 Tournament Only</button>
+    <button class="btn btn-secondary" onclick="buildExport('custom')">📋 Custom Only</button>
+    <button class="btn btn-primary" onclick="buildExport('all')">📋 Everything</button>
+  </div>
+
+  <div class="copy-row">
+    <span class="sport-font" style="font-size:13px;color:var(--mute);text-transform:uppercase;letter-spacing:.1em">Output</span>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span class="copy-status" id="exportCopyStatus">✓ Copied</span>
+      <button class="btn btn-secondary" onclick="copyText('exportOutput','exportCopyStatus')">📋 Copy All</button>
+    </div>
+  </div>
+  <div class="output-box" id="exportOutput">Click a button above to generate.</div>
+</section>
+
+<!-- GRAPHICS -->
+<section class="panel" id="graphics">
+  <h2 class="section-title">Game Graphics</h2>
+  <p class="section-sub">Pick a game, generate a matchup poster, download as PNG for socials.</p>
+
+  <div class="card" style="margin-bottom:18px">
+    <div class="form-grid">
+      <div style="grid-column:span 2"><label>Game</label><select id="g-game"></select></div>
+      <div><label>Type</label><select id="g-type"><option value="matchup">Matchup Poster</option><option value="result-w">Final Score (WIN)</option><option value="result-l">Final Score (LOSS)</option><option value="hype">Game Day Hype</option></select></div>
+      <div><label>Our Score</label><input type="number" id="g-ours" min="0" placeholder="—"></div>
+      <div><label>Their Score</label><input type="number" id="g-theirs" min="0" placeholder="—"></div>
+    </div>
+    <div style="margin-top:10px"><button class="btn btn-primary" onclick="renderGraphic()">🎨 Generate</button></div>
+  </div>
+
+  <div class="svg-preview" id="svgPreview"><div style="color:var(--mute);padding:40px">Pick a game and click Generate.</div></div>
+  <div class="btn-row">
+    <button class="btn btn-secondary" onclick="downloadSvg()">⬇ Download SVG</button>
+    <button class="btn btn-primary" onclick="downloadPng()">⬇ Download PNG (1200×675)</button>
+  </div>
+</section>
+
+<!-- SOCIAL -->
+<section class="panel" id="social">
+  <h2 class="section-title">Social Posts</h2>
+  <p class="section-sub">Pick a template, fill the blanks, copy.</p>
+
+  <div class="template-pills" id="socialPills">
+    <div class="pill active" data-tpl="hype">Game Day Hype</div>
+    <div class="pill" data-tpl="recap-w">Recap — Win</div>
+    <div class="pill" data-tpl="recap-l">Recap — Loss</div>
+    <div class="pill" data-tpl="birthday">Player Birthday</div>
+    <div class="pill" data-tpl="sponsor">Sponsor Thanks</div>
+    <div class="pill" data-tpl="final">Tournament Wrap</div>
+  </div>
+
+  <div class="card" style="margin-bottom:14px">
+    <div class="form-grid" id="socialFields"></div>
+  </div>
+
+  <div class="copy-row">
+    <span class="sport-font" style="font-size:13px;color:var(--mute);text-transform:uppercase;letter-spacing:.1em">Caption</span>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span class="copy-status" id="socialCopyStatus">✓ Copied</span>
+      <button class="btn btn-secondary" onclick="copyText('socialOutput','socialCopyStatus')">📋 Copy</button>
+    </div>
+  </div>
+  <div class="output-box" id="socialOutput">Pick a template above.</div>
+</section>
+
+<!-- COMMS -->
+<section class="panel" id="comms">
+  <h2 class="section-title">Parent Comms</h2>
+  <p class="section-sub">Text + email templates. Merge fields auto-fill from the next game.</p>
+
+  <div class="template-pills" id="commsPills">
+    <div class="pill active" data-tpl="game-day-text">Game Day TEXT</div>
+    <div class="pill" data-tpl="trip-email">Trip Reminder EMAIL</div>
+    <div class="pill" data-tpl="practice-text">Practice TEXT</div>
+    <div class="pill" data-tpl="cancel">Cancellation</div>
+    <div class="pill" data-tpl="reminder">Gear Reminder</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div style="font-family:'Oswald';font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:10px">Merge Values</div>
+      <div class="form-grid" id="commsFields"></div>
+    </div>
+    <div>
+      <div class="copy-row">
+        <span class="sport-font" style="font-size:13px;color:var(--mute);text-transform:uppercase;letter-spacing:.1em">Output</span>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="copy-status" id="commsCopyStatus">✓ Copied</span>
+          <button class="btn btn-secondary" onclick="copyText('commsOutput','commsCopyStatus')">📋 Copy</button>
+        </div>
+      </div>
+      <div class="output-box" id="commsOutput">Pick a template.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRACTICE -->
+<section class="panel" id="practice">
+  <h2 class="section-title">Practice Plans</h2>
+  <p class="section-sub">U15 box lacrosse, Canadian rules. Pick focus + length.</p>
+
+  <div class="card" style="margin-bottom:14px">
+    <div class="form-grid">
+      <div><label>Length</label><select id="pr-len"><option value="60">60 min</option><option value="75" selected>75 min</option><option value="90">90 min</option></select></div>
+      <div><label>Skill Focus</label><select id="pr-focus"><option value="passing">Passing & Catching</option><option value="shooting">Shooting</option><option value="defence">Defence Concepts</option><option value="transition">Transition / Fast Break</option><option value="powerplay">Power Play</option><option value="conditioning">Conditioning</option><option value="mixed">Mixed (full team)</option></select></div>
+      <div><label>Group Size</label><select id="pr-size"><option>Full team (15-20)</option><option>Small (8-12)</option><option>Goalies-only</option></select></div>
+    </div>
+    <div style="margin-top:12px"><button class="btn btn-primary" onclick="buildPractice()">🏃 Build Plan</button></div>
+  </div>
+
+  <div class="copy-row">
+    <span class="sport-font" style="font-size:13px;color:var(--mute);text-transform:uppercase;letter-spacing:.1em">Plan</span>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span class="copy-status" id="practiceCopyStatus">✓ Copied</span>
+      <button class="btn btn-secondary" onclick="copyText('practiceOutput','practiceCopyStatus')">📋 Copy</button>
+    </div>
+  </div>
+  <div class="output-box" id="practiceOutput">Pick a focus and click Build Plan.</div>
+</section>
+
+<!-- TRIP -->
+<section class="panel" id="trip">
+  <h2 class="section-title">Trip Kit</h2>
+  <p class="section-sub">Tournament checklist. Toggle items as you pack. Saved per device.</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="check-group">
+        <h3>🥍 Player Gear</h3>
+        <div id="trip-gear"></div>
+      </div>
+      <div class="check-group">
+        <h3>👕 Apparel</h3>
+        <div id="trip-apparel"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="check-group">
+        <h3>🛏 Hotel & Travel</h3>
+        <div id="trip-hotel"></div>
+      </div>
+      <div class="check-group">
+        <h3>🍎 Food & Hydration</h3>
+        <div id="trip-food"></div>
+      </div>
+      <div class="check-group">
+        <h3>🩹 First Aid & Emergency</h3>
+        <div id="trip-aid"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SETTINGS -->
+<section class="panel" id="settings">
+  <h2 class="section-title">Team Setup</h2>
+  <p class="section-sub">One-time setup. Drives the colours on graphics + names everywhere.</p>
+
+  <div class="card">
+    <div class="form-grid">
+      <div><label>Team Name</label><input id="s-team" value="Grande Prairie Thrashers"></div>
+      <div><label>Short Name</label><input id="s-short" value="Thrashers"></div>
+      <div><label>Division</label><input id="s-div" value="U15 Co-Ed"></div>
+      <div><label>Crest Letter (1-2 chars)</label><input id="s-crest" value="T" maxlength="2"></div>
+      <div><label>Primary Colour</label><div class="color-input"><input type="color" id="s-c1" value="#FF6B35"><input type="text" id="s-c1t" value="#FF6B35"></div></div>
+      <div><label>Accent Colour</label><div class="color-input"><input type="color" id="s-c2" value="#00D4FF"><input type="text" id="s-c2t" value="#00D4FF"></div></div>
+      <div><label>Manager Name</label><input id="s-mgr" value="Tyler Pederson"></div>
+      <div><label>Manager Phone</label><input id="s-mgr-phone" value="780-518-3913"></div>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="saveSettings()">💾 Save Setup</button>
+      <button class="btn btn-ghost" onclick="exportBackup()">⬇ Backup All Data</button>
+      <button class="btn btn-ghost" onclick="importBackupPrompt()">⬆ Restore Backup</button>
+      <button class="btn btn-ghost" style="color:var(--red);border-color:var(--red)" onclick="wipeAll()">🗑 Wipe All Data</button>
+    </div>
+    <input type="file" id="importFile" accept=".json" style="display:none">
+  </div>
+
+  <div style="margin-top:18px" class="card">
+    <div class="sport-font" style="font-size:14px;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">📡 About this page</div>
+    <div style="font-size:13px;line-height:1.7;color:var(--text)">
+      Built free for Tyler by Alessio + Forge (Claude AI), 2026-05-04. Hosted at <span style="color:var(--ice)">tyler.quadfang.com</span>. All your data lives in this browser only — nothing is sent anywhere. Use the Backup button before clearing your browser cache. Bookmark this page on your phone home screen for one-tap access at the rink.
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div>Built free for Tyler · Hosted on QuadFang · Powered by Forge (Claude AI)</div>
+  <div class="signature">A friendly trade for the lacrosse parent life 🥍</div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============= STATE =============
+const STORE_KEY = 'thrashers-hq-v1';
+const DEFAULT_STATE = {
+  settings: {
+    team: 'Grande Prairie Thrashers',
+    short: 'Thrashers',
+    div: 'U15 Co-Ed',
+    crest: 'T',
+    c1: '#FF6B35',
+    c2: '#00D4FF',
+    mgr: 'Tyler Pederson',
+    mgrPhone: '780-518-3913'
+  },
+  tournament: [
+    {id:'t1',day:'FRI',time:'21:30',title:'Curfew',type:'curfew',loc:'Hotel',notes:'All players in their rooms'},
+    {id:'t2',day:'SAT',time:'06:15',title:'Team Breakfast',type:'meal',loc:'Hotel',notes:'Recommended but optional'},
+    {id:'t3',day:'SAT',time:'07:00',title:'Players Arrive',type:'arrive',loc:'RJ Lalonde Arena',notes:'No later than 7:00 AM'},
+    {id:'t4',day:'SAT',time:'08:00',title:'Game 2 — vs Lakeland Heat 1',type:'game-home',loc:'RJ Lalonde Arena',notes:'Home · 50 min warm-up + dryland'},
+    {id:'t5',day:'SAT',time:'11:45',title:'Players Arrive',type:'arrive',loc:'RJ Lalonde Arena',notes:'No later than Noon'},
+    {id:'t6',day:'SAT',time:'12:30',title:'Game 3 — vs Lloyd Brutes 1',type:'game-away',loc:'RJ Lalonde Arena',notes:'Away · 50 min warm-up + dryland'},
+    {id:'t7',day:'SAT',time:'14:00',title:'Team BBQ',type:'meal',loc:'Arena Parking Lot',notes:''},
+    {id:'t8',day:'SAT',time:'18:30',title:'Group Bonding — Bobcats Jr B',type:'bonding',loc:'RJ Lalonde Arena',notes:'Recommended but optional'},
+    {id:'t9',day:'SAT',time:'22:30',title:'Curfew',type:'curfew',loc:'Hotel',notes:'After Jr B game'},
+    {id:'t10',day:'SUN',time:'12:00',title:'3rd vs 4th Place — TBD',type:'tbd',loc:'C2 Cenovus',notes:'Top 4 of 10 teams play Sunday'},
+    {id:'t11',day:'SUN',time:'12:30',title:'1st Place Game vs Lloyd Brutes 1 — TBD',type:'tbd',loc:'RJ Lalonde Arena',notes:'Top 4 of 10 teams play Sunday'}
+  ],
+  custom: [],
+  roster: [],
+  trip: {},
+  socialState:{},
+  commsState:{}
+};
+
+let state = loadState();
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(!raw) return JSON.parse(JSON.stringify(DEFAULT_STATE));
+    const s = JSON.parse(raw);
+    // shallow merge for new keys added later
+    return Object.assign(JSON.parse(JSON.stringify(DEFAULT_STATE)), s, {
+      settings: Object.assign({}, DEFAULT_STATE.settings, s.settings||{})
+    });
+  }catch(e){
+    return JSON.parse(JSON.stringify(DEFAULT_STATE));
+  }
+}
+function saveState(){
+  localStorage.setItem(STORE_KEY, JSON.stringify(state));
+}
+
+// ============= TABS =============
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.tab).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ============= TOAST =============
+function toast(msg){
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(()=>el.classList.remove('show'), 1800);
+}
+
+// ============= COPY =============
+async function copyText(elId, statusId){
+  const t = document.getElementById(elId).textContent;
+  try{
+    await navigator.clipboard.writeText(t);
+    const s = document.getElementById(statusId);
+    s.classList.add('show');
+    setTimeout(()=>s.classList.remove('show'), 1500);
+    toast('Copied');
+  }catch(e){ toast('Copy failed — long-press to select') }
+}
+
+// ============= TIME FORMAT =============
+function fmtTime(t24){
+  if(!t24) return '';
+  const [h,m] = t24.split(':').map(Number);
+  const ampm = h<12?'AM':'PM';
+  const h12 = ((h+11)%12)+1;
+  return {hr: h12+':'+(m<10?'0'+m:m), ampm};
+}
+function fmtTimeStr(t24){
+  const f = fmtTime(t24); return f? f.hr+' '+f.ampm : '';
+}
+function dayLabel(day){
+  return ({FRI:'Friday',SAT:'Saturday',SUN:'Sunday',MON:'Monday',TUE:'Tuesday',WED:'Wednesday',THU:'Thursday'})[day]||day;
+}
+
+// ============= TOURNAMENT RENDER =============
+function renderTournament(){
+  const list = document.getElementById('tournamentList');
+  list.innerHTML = '';
+  if(state.tournament.length===0){
+    list.innerHTML = '<div class="empty">No tournament events.</div>';
+    return;
+  }
+  state.tournament.forEach(e=>{
+    list.appendChild(eventCard(e, 'tournament'));
+  });
+}
+function eventCard(e, listKey){
+  const el = document.createElement('div');
+  el.className = 'event '+ (e.type||'');
+  if(e.type==='game-away') el.classList.add('away');
+  if(e.type==='bonding') el.classList.add('bonding');
+  if(e.type==='curfew') el.classList.add('curfew');
+  if(e.type==='tbd') el.classList.add('tbd');
+  const f = fmtTime(e.time);
+  el.innerHTML = `
+    <div class="event-time">
+      <div class="day">${e.day||''}</div>
+      <div class="hr">${f?f.hr:''}</div>
+      <div class="ampm">${f?f.ampm:''}</div>
+    </div>
+    <div class="event-detail">
+      <div class="event-title">${escapeHtml(e.title)}</div>
+      <div class="event-meta">
+        ${e.loc?`<span>📍 ${escapeHtml(e.loc)}</span>`:''}
+        ${e.notes?`<span>📝 ${escapeHtml(e.notes)}</span>`:''}
+      </div>
+    </div>
+    <div class="event-actions">
+      <button class="del" data-id="${e.id}" data-list="${listKey}">✕</button>
+    </div>
+  `;
+  el.querySelector('.del').addEventListener('click', ev=>{
+    deleteEvent(ev.target.dataset.list, ev.target.dataset.id);
+  });
+  return el;
+}
+function deleteEvent(listKey, id){
+  if(!confirm('Delete this event?')) return;
+  state[listKey] = state[listKey].filter(x=>x.id!==id);
+  saveState();
+  renderTournament(); renderCustom(); populateGameSelect();
+}
+function escapeHtml(s){
+  return String(s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+}
+
+// ============= CUSTOM EVENTS =============
+function addCustomEvent(){
+  const date = document.getElementById('evt-date').value;
+  if(!date){ toast('Pick a date'); return; }
+  const d = new Date(date+'T00:00');
+  const day = ['SUN','MON','TUE','WED','THU','FRI','SAT'][d.getDay()];
+  const e = {
+    id:'c'+Date.now(),
+    day,
+    date,
+    time:document.getElementById('evt-time').value,
+    title:document.getElementById('evt-title').value || 'Untitled',
+    type:document.getElementById('evt-type').value,
+    loc:document.getElementById('evt-loc').value,
+    notes:document.getElementById('evt-notes').value
+  };
+  state.custom.push(e);
+  state.custom.sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+  saveState();
+  ['evt-title','evt-time','evt-loc','evt-notes'].forEach(id=>document.getElementById(id).value='');
+  renderCustom(); populateGameSelect();
+  toast('Event added');
+}
+function renderCustom(){
+  const list = document.getElementById('customList');
+  list.innerHTML = '';
+  if(state.custom.length===0){
+    list.innerHTML = '<div class="empty">No custom events yet. Add practice or extra games above.</div>';
+    return;
+  }
+  state.custom.forEach(e=> list.appendChild(eventCard(e,'custom')));
+}
+
+// ============= ROSTER =============
+function addPlayer(){
+  const num = document.getElementById('p-num').value;
+  const first = document.getElementById('p-first').value.trim();
+  const last = document.getElementById('p-last').value.trim();
+  if(!first){ toast('First name required'); return; }
+  state.roster.push({
+    id:'p'+Date.now(),
+    num: num||'',
+    first, last,
+    pos:document.getElementById('p-pos').value,
+    bday:document.getElementById('p-bday').value,
+    parent:document.getElementById('p-parent').value,
+    phone:document.getElementById('p-phone').value,
+    email:document.getElementById('p-email').value
+  });
+  state.roster.sort((a,b)=>(parseInt(a.num)||99)-(parseInt(b.num)||99));
+  saveState();
+  ['p-num','p-first','p-last','p-bday','p-parent','p-phone','p-email'].forEach(id=>document.getElementById(id).value='');
+  renderRoster();
+  toast('Player added');
+}
+function renderRoster(){
+  const list = document.getElementById('rosterList');
+  list.innerHTML = '';
+  if(state.roster.length===0){
+    list.innerHTML = '<div class="empty" style="grid-column:1/-1">No players yet. Add your first one above.</div>';
+    return;
+  }
+  state.roster.forEach(p=>{
+    const el = document.createElement('div');
+    el.className = 'player';
+    const bdayLabel = p.bday ? new Date(p.bday+'T00:00').toLocaleDateString('en-CA',{month:'short',day:'numeric'}) : '';
+    el.innerHTML = `
+      <div class="jersey">${p.num||'?'}</div>
+      <div class="player-info">
+        <div class="player-name">${escapeHtml(p.first)} ${escapeHtml(p.last)}</div>
+        <div class="player-meta">${escapeHtml(p.pos||'')} ${bdayLabel?'· 🎂 '+bdayLabel:''}</div>
+        ${p.parent?`<div class="player-meta">${escapeHtml(p.parent)} · ${escapeHtml(p.phone||'')}</div>`:''}
+      </div>
+      <button class="player-del" data-id="${p.id}">✕</button>
+    `;
+    el.querySelector('.player-del').addEventListener('click',()=>{
+      if(!confirm('Remove '+p.first+'?')) return;
+      state.roster = state.roster.filter(x=>x.id!==p.id);
+      saveState(); renderRoster();
+    });
+    list.appendChild(el);
+  });
+}
+
+// ============= EXPORT =============
+function buildExport(scope){
+  let events = [];
+  if(scope==='tournament' || scope==='all') events = events.concat(state.tournament);
+  if(scope==='custom' || scope==='all') events = events.concat(state.custom);
+  if(events.length===0){ document.getElementById('exportOutput').textContent='Nothing to export.'; return; }
+  const lines = events.map(e=>{
+    const f = fmtTime(e.time);
+    return [
+      'TITLE: '+ e.title,
+      'DAY:   '+ dayLabel(e.day) + (e.date?` (${e.date})`:''),
+      'START: '+ (f?f.hr+' '+f.ampm:'TBD'),
+      'WHERE: '+ (e.loc||'TBD'),
+      'NOTES: '+ (e.notes||'—'),
+      '---'
+    ].join('\n');
+  });
+  document.getElementById('exportOutput').textContent = lines.join('\n');
+  toast('Export built — '+events.length+' events');
+}
+
+// ============= GRAPHICS =============
+function populateGameSelect(){
+  const sel = document.getElementById('g-game');
+  if(!sel) return;
+  sel.innerHTML = '';
+  const games = [...state.tournament, ...state.custom].filter(e=>['game-home','game-away','tbd'].includes(e.type));
+  if(games.length===0){
+    sel.innerHTML = '<option value="">No games yet</option>';
+    return;
+  }
+  games.forEach(g=>{
+    const opt = document.createElement('option');
+    opt.value = g.id;
+    opt.textContent = `${g.day} ${fmtTimeStr(g.time)} — ${g.title}`;
+    sel.appendChild(opt);
+  });
+}
+function findGame(id){
+  return [...state.tournament, ...state.custom].find(e=>e.id===id);
+}
+function parseOpponent(title){
+  // "Game 2 — vs Lakeland Heat 1" → "Lakeland Heat 1"
+  const m = title.match(/vs\s+(.+)/i);
+  return m ? m[1].trim() : 'TBD';
+}
+function renderGraphic(){
+  const game = findGame(document.getElementById('g-game').value);
+  if(!game){ toast('Pick a game'); return; }
+  const type = document.getElementById('g-type').value;
+  const c1 = state.settings.c1, c2 = state.settings.c2;
+  const team = state.settings.short.toUpperCase();
+  const opp = parseOpponent(game.title).toUpperCase();
+  const time = fmtTimeStr(game.time);
+  const day = dayLabel(game.day);
+  const loc = game.loc || 'TBD';
+  const ours = document.getElementById('g-ours').value;
+  const theirs = document.getElementById('g-theirs').value;
+  let svg;
+  if(type==='matchup' || type==='hype'){
+    const heading = type==='hype' ? 'GAME DAY' : 'NEXT UP';
+    svg = matchupSvg({c1,c2,team,opp,time,day,loc,heading});
+  } else {
+    const won = type==='result-w';
+    svg = resultSvg({c1,c2,team,opp,ours,theirs,won,day,loc});
+  }
+  document.getElementById('svgPreview').innerHTML = svg;
+}
+function matchupSvg({c1,c2,team,opp,time,day,loc,heading}){
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%">
+    <defs>
+      <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#05080F"/>
+        <stop offset="1" stop-color="#0A1228"/>
+      </linearGradient>
+      <linearGradient id="leftG" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="${c1}" stop-opacity="0.3"/>
+        <stop offset="1" stop-color="${c1}" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="rightG" x1="1" y1="0" x2="0" y2="0">
+        <stop offset="0" stop-color="${c2}" stop-opacity="0.3"/>
+        <stop offset="1" stop-color="${c2}" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <rect width="1200" height="675" fill="url(#bg)"/>
+    <rect x="0" y="0" width="600" height="675" fill="url(#leftG)"/>
+    <rect x="600" y="0" width="600" height="675" fill="url(#rightG)"/>
+    <line x1="0" y1="40" x2="1200" y2="40" stroke="${c2}" stroke-width="3"/>
+    <line x1="0" y1="635" x2="1200" y2="635" stroke="${c1}" stroke-width="3"/>
+    <text x="600" y="100" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="48" fill="#FFC857" letter-spacing="8">${heading}</text>
+    <text x="300" y="290" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="84" fill="#fff">${team}</text>
+    <text x="300" y="340" text-anchor="middle" font-family="Oswald, sans-serif" font-size="22" fill="${c1}" letter-spacing="4">HOME</text>
+    <text x="600" y="320" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="120" fill="#FFC857">VS</text>
+    <text x="900" y="290" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="84" fill="#fff">${opp}</text>
+    <text x="900" y="340" text-anchor="middle" font-family="Oswald, sans-serif" font-size="22" fill="${c2}" letter-spacing="4">AWAY</text>
+    <rect x="200" y="430" width="800" height="2" fill="${c2}" opacity="0.4"/>
+    <text x="600" y="500" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="56" fill="#fff">${day.toUpperCase()} · ${time}</text>
+    <text x="600" y="555" text-anchor="middle" font-family="Oswald, sans-serif" font-size="26" fill="#8A95B5" letter-spacing="2">${loc.toUpperCase()}</text>
+    <text x="600" y="610" text-anchor="middle" font-family="Oswald, sans-serif" font-size="16" fill="${c1}" letter-spacing="6">GO THRASHERS</text>
+  </svg>`;
+}
+function resultSvg({c1,c2,team,opp,ours,theirs,won,day,loc}){
+  const headline = won ? 'VICTORY' : 'TOUGH ONE';
+  const headColor = won ? '#22C55E' : '#FFC857';
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%">
+    <defs>
+      <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#05080F"/>
+        <stop offset="1" stop-color="#0A1228"/>
+      </linearGradient>
+    </defs>
+    <rect width="1200" height="675" fill="url(#bg2)"/>
+    <line x1="0" y1="40" x2="1200" y2="40" stroke="${headColor}" stroke-width="3"/>
+    <line x1="0" y1="635" x2="1200" y2="635" stroke="${headColor}" stroke-width="3"/>
+    <text x="600" y="110" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="64" fill="${headColor}" letter-spacing="12">${headline}</text>
+    <text x="600" y="160" text-anchor="middle" font-family="Oswald, sans-serif" font-size="20" fill="#8A95B5" letter-spacing="6">FINAL · ${day.toUpperCase()}</text>
+    <text x="300" y="320" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="72" fill="#fff">${team}</text>
+    <text x="300" y="470" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="180" fill="${c1}">${ours||'—'}</text>
+    <text x="600" y="430" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="100" fill="#FFC857">—</text>
+    <text x="900" y="320" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="72" fill="#fff">${opp}</text>
+    <text x="900" y="470" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="180" fill="${c2}">${theirs||'—'}</text>
+    <text x="600" y="565" text-anchor="middle" font-family="Oswald, sans-serif" font-size="22" fill="#8A95B5" letter-spacing="3">${loc.toUpperCase()}</text>
+    <text x="600" y="610" text-anchor="middle" font-family="Oswald, sans-serif" font-size="16" fill="${c1}" letter-spacing="6">#GOTHRASHERS</text>
+  </svg>`;
+}
+function downloadSvg(){
+  const svg = document.querySelector('#svgPreview svg');
+  if(!svg){ toast('Generate first'); return; }
+  const data = new XMLSerializer().serializeToString(svg);
+  const blob = new Blob([data], {type:'image/svg+xml'});
+  triggerDownload(blob, fileStem()+'.svg');
+}
+function downloadPng(){
+  const svg = document.querySelector('#svgPreview svg');
+  if(!svg){ toast('Generate first'); return; }
+  const data = new XMLSerializer().serializeToString(svg);
+  const img = new Image();
+  const blob = new Blob([data], {type:'image/svg+xml;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  img.onload = ()=>{
+    const canvas = document.createElement('canvas');
+    canvas.width = 1200; canvas.height = 675;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, 1200, 675);
+    URL.revokeObjectURL(url);
+    canvas.toBlob(b=> triggerDownload(b, fileStem()+'.png'), 'image/png');
+  };
+  img.onerror = ()=>{ toast('PNG export failed — try SVG'); URL.revokeObjectURL(url); };
+  img.src = url;
+}
+function fileStem(){
+  const game = findGame(document.getElementById('g-game').value);
+  if(!game) return 'thrashers-graphic';
+  return ('thrashers-'+(game.title||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')).slice(0,60);
+}
+function triggerDownload(blob, name){
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();}, 100);
+  toast('Downloaded '+name);
+}
+
+// ============= SOCIAL =============
+const SOCIAL = {
+  hype: {
+    fields:['opponent','time','location','hashtag'],
+    template: `🥍 GAME DAY 🥍
+
+The {team} drop the gloves against {opponent} TODAY.
+
+⏰ {time}
+📍 {location}
+
+Bring the noise. Bring the energy.
+LET'S GO THRASHERS! 🔥
+
+{hashtag}`
+  },
+  'recap-w': {
+    fields:['opponent','ours','theirs','starOfTheGame','hashtag'],
+    template: `🏆 W FOR THE THRASHERS 🏆
+
+Final: {team} {ours} — {opponent} {theirs}
+
+⭐ Star of the game: {starOfTheGame}
+
+That's how you grind. Proud of these kids. 💪
+On to the next one.
+
+{hashtag}`
+  },
+  'recap-l': {
+    fields:['opponent','ours','theirs','positive','hashtag'],
+    template: `Tough one tonight. Final: {team} {ours} — {opponent} {theirs}
+
+{positive}
+
+We get up. We work. We're back at it next game. 🥍
+
+{hashtag}`
+  },
+  birthday: {
+    fields:['playerName','jerseyNum','age'],
+    template: `🎂 HAPPY BIRTHDAY 🎂
+
+Wishing #{jerseyNum} {playerName} a huge {age}th birthday from your {team} family! 🥍🔥
+
+Have an amazing day, kid.`
+  },
+  sponsor: {
+    fields:['sponsorName','sponsorWhat'],
+    template: `🙏 THANK YOU 🙏
+
+Massive shout out to {sponsorName} for {sponsorWhat}.
+
+Local sponsors are why our kids get to play the game they love. Go give them your business. 💯
+
+#SupportLocal #ThrashersFamily`
+  },
+  final: {
+    fields:['placeFinish','highlight','hashtag'],
+    template: `🥍 TOURNAMENT WRAP 🥍
+
+The {team} finished {placeFinish} this weekend in Lloydminster.
+
+{highlight}
+
+Proud of every kid who put on the jersey. Big thanks to the parents, the coaches, and the host club for an awesome weekend.
+
+{hashtag}`
+  }
+};
+let socialActive = 'hype';
+function renderSocialFields(){
+  const cfg = SOCIAL[socialActive];
+  const wrap = document.getElementById('socialFields');
+  wrap.innerHTML = '';
+  cfg.fields.forEach(f=>{
+    const div = document.createElement('div');
+    div.innerHTML = `<label>${labelize(f)}</label><input data-f="${f}" placeholder="${placeholderFor(f)}">`;
+    div.querySelector('input').value = (state.socialState[socialActive]||{})[f] || '';
+    div.querySelector('input').addEventListener('input', e=>{
+      state.socialState[socialActive] = state.socialState[socialActive]||{};
+      state.socialState[socialActive][f] = e.target.value;
+      saveState();
+      renderSocialOutput();
+    });
+    wrap.appendChild(div);
+  });
+  renderSocialOutput();
+}
+function renderSocialOutput(){
+  const cfg = SOCIAL[socialActive];
+  let txt = cfg.template;
+  const vals = state.socialState[socialActive] || {};
+  txt = txt.replaceAll('{team}', state.settings.short);
+  cfg.fields.forEach(f=> txt = txt.replaceAll('{'+f+'}', vals[f] || '___'));
+  document.getElementById('socialOutput').textContent = txt;
+}
+function labelize(f){
+  return ({
+    opponent:'Opponent', time:'Time', location:'Location', hashtag:'Hashtag(s)',
+    ours:'Our Score', theirs:'Their Score', starOfTheGame:'Star of the Game',
+    positive:'Positive Note', playerName:'Player Name', jerseyNum:'Jersey #', age:'Age Turning',
+    sponsorName:'Sponsor Name', sponsorWhat:'What They Did', placeFinish:'Place / Result', highlight:'Standout Moment'
+  })[f] || f;
+}
+function placeholderFor(f){
+  return ({
+    opponent:'Lakeland Heat 1', time:'8:00 AM', location:'RJ Lalonde Arena',
+    hashtag:'#GoThrashers #ALAU15', ours:'7', theirs:'5',
+    starOfTheGame:'#12 Jonny Smith', positive:'They left it all on the floor.',
+    playerName:'Mason Pederson', jerseyNum:'12', age:'15',
+    sponsorName:'AZ Custom Knives', sponsorWhat:'sponsoring our jerseys this season',
+    placeFinish:'2nd place', highlight:'Game-tying goal in the final 30 seconds.'
+  })[f] || '';
+}
+document.getElementById('socialPills').addEventListener('click', e=>{
+  if(!e.target.dataset.tpl) return;
+  document.querySelectorAll('#socialPills .pill').forEach(p=>p.classList.remove('active'));
+  e.target.classList.add('active');
+  socialActive = e.target.dataset.tpl;
+  renderSocialFields();
+});
+
+// ============= COMMS =============
+const COMMS = {
+  'game-day-text': {
+    fields:['gameTitle','arriveTime','location','wear','bring'],
+    template: `Hey {team} parents! 🥍
+
+{gameTitle} TODAY.
+⏰ Arrive: {arriveTime}
+📍 {location}
+👕 Wear: {wear}
+🎒 Bring: {bring}
+
+LET'S GO! See you at the rink.
+— {mgr}`
+  },
+  'trip-email': {
+    fields:['eventTitle','dateRange','hotel','departureTime','meetingPoint'],
+    template: `Subject: {team} — {eventTitle} Trip Info
+
+Hi {team} families,
+
+Quick reminder for {eventTitle} ({dateRange}):
+
+🏨 HOTEL: {hotel}
+🚗 DEPARTURE: {departureTime} from {meetingPoint}
+📅 SCHEDULE: See attached / pinned in TeamLinkt
+
+Things to remember:
+• Player gear bag (sticks, helmet, pads, mouth guard, jersey + shorts)
+• Runners + dryland clothes for warm-up
+• Water bottle
+• Snacks for between games
+• Hotel curfew posted in TeamLinkt
+
+Any issues, hit me up: {mgrPhone}
+
+Thanks team!
+— {mgr}
+{team} Manager`
+  },
+  'practice-text': {
+    fields:['date','time','location','focus'],
+    template: `{team} practice reminder 🥍
+
+📅 {date}
+⏰ {time}
+📍 {location}
+🎯 Focus: {focus}
+
+Bring full gear + water bottle. See you on the floor.
+— {mgr}`
+  },
+  cancel: {
+    fields:['eventTitle','reason','reschedule'],
+    template: `{team} families — {eventTitle} is CANCELLED.
+
+Reason: {reason}
+Reschedule: {reschedule}
+
+Sorry for the short notice. Please share with anyone who might miss the message.
+— {mgr}
+{mgrPhone}`
+  },
+  reminder: {
+    fields:['gameTitle'],
+    template: `Quick reminder for {gameTitle} 🥍
+
+Don't forget:
+✅ Helmet + cage
+✅ Mouth guard (NEW one if old one is gross 😅)
+✅ Stick + back-up stick
+✅ Full pads (shoulder, elbow, gloves, kidney, jock, knee)
+✅ Jersey + team shorts
+✅ Runners for warm-up
+✅ Water bottle (full!)
+✅ Snack for between games
+
+Forgot something? Text the parent group.
+— {mgr}`
+  }
+};
+let commsActive = 'game-day-text';
+function renderCommsFields(){
+  const cfg = COMMS[commsActive];
+  const wrap = document.getElementById('commsFields');
+  wrap.innerHTML = '';
+  cfg.fields.forEach(f=>{
+    const div = document.createElement('div');
+    div.innerHTML = `<label>${labelizeComms(f)}</label><input data-f="${f}" placeholder="${commsPlaceholder(f)}">`;
+    div.querySelector('input').value = (state.commsState[commsActive]||{})[f] || '';
+    div.querySelector('input').addEventListener('input', e=>{
+      state.commsState[commsActive] = state.commsState[commsActive]||{};
+      state.commsState[commsActive][f] = e.target.value;
+      saveState();
+      renderCommsOutput();
+    });
+    wrap.appendChild(div);
+  });
+  renderCommsOutput();
+}
+function renderCommsOutput(){
+  const cfg = COMMS[commsActive];
+  let txt = cfg.template;
+  const vals = state.commsState[commsActive] || {};
+  txt = txt.replaceAll('{team}', state.settings.short);
+  txt = txt.replaceAll('{mgr}', state.settings.mgr);
+  txt = txt.replaceAll('{mgrPhone}', state.settings.mgrPhone);
+  cfg.fields.forEach(f=> txt = txt.replaceAll('{'+f+'}', vals[f] || '___'));
+  document.getElementById('commsOutput').textContent = txt;
+}
+function labelizeComms(f){
+  return ({
+    gameTitle:'Game Title', arriveTime:'Arrival Time', location:'Location',
+    wear:'What to Wear', bring:'What to Bring',
+    eventTitle:'Trip Title', dateRange:'Dates', hotel:'Hotel',
+    departureTime:'Departure', meetingPoint:'Meet Point',
+    date:'Date', time:'Time', focus:'Focus',
+    reason:'Reason', reschedule:'Reschedule Plan'
+  })[f] || f;
+}
+function commsPlaceholder(f){
+  return ({
+    gameTitle:'Game vs Lakeland Heat 1', arriveTime:'7:00 AM', location:'RJ Lalonde Arena',
+    wear:'White jerseys', bring:'Mouth guard, water, snack',
+    eventTitle:'Lloyd Tournament', dateRange:'May 9-11',
+    hotel:'Holiday Inn Lloydminster', departureTime:'4:00 PM Friday',
+    meetingPoint:'Wembley Rec Centre', date:'Tue May 12', time:'6:30 PM',
+    focus:'Powerplay sets', reason:'Ice unavailable', reschedule:'Tuesday May 19 same time'
+  })[f] || '';
+}
+document.getElementById('commsPills').addEventListener('click', e=>{
+  if(!e.target.dataset.tpl) return;
+  document.querySelectorAll('#commsPills .pill').forEach(p=>p.classList.remove('active'));
+  e.target.classList.add('active');
+  commsActive = e.target.dataset.tpl;
+  renderCommsFields();
+});
+
+// ============= PRACTICE =============
+const DRILLS = {
+  passing: [
+    {n:'2-line stationary passing', m:8, d:'Two lines facing each other 8m apart. Crisp passes off ear, off hip. Both hands.'},
+    {n:'Box passing (5-spot)', m:10, d:'5 cones in a box. Player at each. Pass + cut + replace. 2 balls.'},
+    {n:'Give-and-go', m:10, d:'Pass to coach/teammate, V-cut hard, receive on the move, fake & shoot.'},
+    {n:'3-man weave', m:10, d:'End-to-end. Pass, follow your pass, finish on net. Keep it tight.'}
+  ],
+  shooting: [
+    {n:'Stationary form shots', m:8, d:'From slot. Top corners only. Both hands. 5 reps each side.'},
+    {n:'Pick & roll shots', m:10, d:'Off a screen. Set screen, roll, catch + shoot off the catch.'},
+    {n:'Cross-floor 1-timer', m:10, d:'Ball swings, shooter stretches goalie corner-to-corner. Go bar-down.'},
+    {n:'Inside finish under pressure', m:10, d:'Coach pressures with stick check. Player must finish through contact.'}
+  ],
+  defence: [
+    {n:'Footwork ladder + slides', m:8, d:'Defensive shuffle, drop-step, recovery. 3 sets.'},
+    {n:'1v1 from goal-line', m:10, d:'Attacker at GLE, defender plays angle. Force outside.'},
+    {n:'2v2 pick defence', m:12, d:'Switch vs hedge calls. Communicate every screen.'},
+    {n:'5v5 zone shell', m:15, d:'Box-and-1 zone. Rotate on ball movement. No silent defence.'}
+  ],
+  transition: [
+    {n:'Outlet pass off save', m:8, d:'Goalie save → outlet to wing → fast break.'},
+    {n:'4v3 fast break', m:12, d:'Numbered advantage. Move the ball, attack the open man.'},
+    {n:'5v4 powerplay break', m:12, d:'Penalty kill chases. PP must score in under 8 seconds.'},
+    {n:'Full-floor scrimmage', m:15, d:'Live transition. No long possessions — push pace.'}
+  ],
+  powerplay: [
+    {n:'Umbrella set walk-through', m:10, d:'Top of umbrella, two wings, two crease. Move ball quickly.'},
+    {n:'5-man weave', m:10, d:'Constant motion. Set picks for the shooter.'},
+    {n:'Crease finish off swing', m:10, d:'Ball swings perimeter, crease man drives backdoor.'},
+    {n:'Live 5v4', m:15, d:'PK rotates. PP earns goals, then resets.'}
+  ],
+  conditioning: [
+    {n:'Floor lengths — 30 sec', m:6, d:'End-to-end sprints, 30 sec on / 30 sec off, 6 reps.'},
+    {n:'Suicides', m:6, d:'Blue, red, far blue, far end. 4 sets, 60 sec rest.'},
+    {n:'Battle in corners', m:10, d:'1v1 ground balls, 30 sec shifts. Winner stays.'},
+    {n:'Goalie conditioning', m:8, d:'Down-up-shuffle-shot. 10 reps, 3 sets.'}
+  ],
+  mixed: [
+    {n:'Dynamic warm-up', m:8, d:'High knees, butt kicks, lunges, side shuffles, A-skips.'},
+    {n:'Passing pyramid', m:10, d:'2 lines. Add a player every minute. Communication required.'},
+    {n:'Shooting circuit', m:12, d:'4 stations: stationary, on the move, off pick, in tight.'},
+    {n:'1v1 from up top', m:10, d:'Live, both hands. Defender resets.'},
+    {n:'5v5 small-area game', m:15, d:'Half floor. 3 passes before shot. Awards pace.'}
+  ]
+};
+function buildPractice(){
+  const len = parseInt(document.getElementById('pr-len').value);
+  const focus = document.getElementById('pr-focus').value;
+  const size = document.getElementById('pr-size').value;
+  const drills = DRILLS[focus] || DRILLS.mixed;
+
+  // Standard structure: warm-up (10) + drills + cool-down (5)
+  const warmup = 10, cool = 5;
+  const drillTime = len - warmup - cool;
+  // Pick drills until we fill drillTime
+  let used = [];
+  let total = 0;
+  for(const d of drills){
+    if(total + d.m <= drillTime){ used.push(d); total += d.m; }
+  }
+  // Top up if short
+  while(total < drillTime - 5){
+    const d = drills[Math.floor(Math.random()*drills.length)];
+    used.push({...d, n:d.n+' (repeat)'}); total += d.m;
+  }
+  // Build text
+  let out = `🥍 ${state.settings.short.toUpperCase()} PRACTICE — ${len} MIN\n`;
+  out += `Focus: ${labelizeComms(focus)||focus} · Group: ${size}\n`;
+  out += `Date: ___________\n\n`;
+  out += `── WARM-UP (${warmup} min) ──\n`;
+  out += `• Light jog 2 laps\n• Dynamic stretch\n• Stick handling — both hands\n• Pass-and-catch in pairs\n\n`;
+  out += `── MAIN BLOCK (${total} min) ──\n`;
+  used.forEach(d=>{
+    out += `• [${d.m} min] ${d.n}\n   ${d.d}\n`;
+  });
+  out += `\n── COOL-DOWN (${cool} min) ──\n`;
+  out += `• Static stretch\n• Coach talk — what worked, what to fix\n• Reminder: next event date\n`;
+  document.getElementById('practiceOutput').textContent = out;
+}
+
+// ============= TRIP CHECKLIST =============
+const TRIP_LISTS = {
+  gear: ['Helmet + cage','Mouth guard (spare!)','Lacrosse stick','Back-up stick','Shoulder pads','Elbow pads','Gloves','Kidney pads','Jock / jill','Knee pads','Athletic tape','Stick wax / grip'],
+  apparel: ['Game jersey (BOTH colours if 2-game day)','Team shorts','Compression tights','Runners for dryland','Hat / toque','Hoodie','Casual clothes for hotel','Pyjamas','Underwear x days+1','Socks x days+2'],
+  hotel: ['TeamLinkt schedule pinned','Hotel address + room #','Curfew times','Roommate list','Coach phone numbers','Phone charger + battery pack','Headphones'],
+  food: ['Water bottle (FULL)','Electrolyte mix / Gatorade','Pre-game snack (banana, granola bar)','Between-games carbs','Recovery snack','Cash for arena concession'],
+  aid: ['Health card / insurance','Player meds (if any)','Tylenol / Advil','Bandages + tape','Ice packs (instant)','Anti-chafe stick','Tampons / pads (where applicable)','Emergency contact card']
+};
+function renderTrip(){
+  Object.keys(TRIP_LISTS).forEach(group=>{
+    const wrap = document.getElementById('trip-'+group);
+    wrap.innerHTML = '';
+    TRIP_LISTS[group].forEach((item,i)=>{
+      const id = group+'-'+i;
+      const checked = state.trip[id] || false;
+      const lab = document.createElement('label');
+      lab.className = 'check' + (checked?' done':'');
+      lab.innerHTML = `<input type="checkbox" ${checked?'checked':''} data-id="${id}"> <span>${escapeHtml(item)}</span>`;
+      lab.querySelector('input').addEventListener('change', e=>{
+        state.trip[id] = e.target.checked;
+        saveState();
+        lab.classList.toggle('done', e.target.checked);
+      });
+      wrap.appendChild(lab);
+    });
+  });
+}
+
+// ============= SETTINGS =============
+function loadSettingsForm(){
+  const s = state.settings;
+  document.getElementById('s-team').value = s.team;
+  document.getElementById('s-short').value = s.short;
+  document.getElementById('s-div').value = s.div;
+  document.getElementById('s-crest').value = s.crest;
+  document.getElementById('s-c1').value = s.c1;
+  document.getElementById('s-c1t').value = s.c1;
+  document.getElementById('s-c2').value = s.c2;
+  document.getElementById('s-c2t').value = s.c2;
+  document.getElementById('s-mgr').value = s.mgr;
+  document.getElementById('s-mgr-phone').value = s.mgrPhone;
+}
+function saveSettings(){
+  state.settings = {
+    team: document.getElementById('s-team').value,
+    short: document.getElementById('s-short').value,
+    div: document.getElementById('s-div').value,
+    crest: document.getElementById('s-crest').value,
+    c1: document.getElementById('s-c1').value,
+    c2: document.getElementById('s-c2').value,
+    mgr: document.getElementById('s-mgr').value,
+    mgrPhone: document.getElementById('s-mgr-phone').value
+  };
+  saveState();
+  applyBranding();
+  toast('Setup saved');
+}
+function applyBranding(){
+  document.querySelector('h1').innerHTML = state.settings.short.toUpperCase()+' <span class="accent">HQ</span>';
+  document.querySelector('.subtitle').textContent = state.settings.div+' · 2026';
+  document.querySelector('.tagline').textContent = 'Manager Command Centre · '+state.settings.mgr;
+  document.getElementById('crest').textContent = state.settings.crest;
+  document.title = state.settings.short+' HQ — '+state.settings.mgr;
+}
+['s-c1','s-c2'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', e=>{
+    document.getElementById(id+'t').value = e.target.value;
+  });
+});
+['s-c1t','s-c2t'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', e=>{
+    if(/^#[0-9A-Fa-f]{6}$/.test(e.target.value)){
+      document.getElementById(id.replace('t','')).value = e.target.value;
+    }
+  });
+});
+function exportBackup(){
+  const blob = new Blob([JSON.stringify(state,null,2)], {type:'application/json'});
+  triggerDownload(blob, 'thrashers-hq-backup-'+new Date().toISOString().slice(0,10)+'.json');
+}
+function importBackupPrompt(){
+  document.getElementById('importFile').click();
+}
+document.getElementById('importFile').addEventListener('change', e=>{
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ev=>{
+    try{
+      const imported = JSON.parse(ev.target.result);
+      if(!imported.settings){ toast('Not a valid backup'); return; }
+      if(!confirm('Replace ALL current data with backup?')) return;
+      state = imported;
+      saveState();
+      initAll();
+      toast('Backup restored');
+    }catch(err){ toast('Invalid file') }
+  };
+  r.readAsText(f);
+});
+function wipeAll(){
+  if(!confirm('Wipe ALL data on this device? This cannot be undone.')) return;
+  if(!confirm('Are you sure? This deletes the roster, custom events, and all your saved drafts.')) return;
+  localStorage.removeItem(STORE_KEY);
+  state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+  initAll();
+  toast('Wiped — back to default');
+}
+
+// ============= INIT =============
+function initAll(){
+  loadSettingsForm();
+  applyBranding();
+  renderTournament();
+  renderCustom();
+  renderRoster();
+  populateGameSelect();
+  renderSocialFields();
+  renderCommsFields();
+  renderTrip();
+}
+initAll();
+</script>
+</body>
+</html>
