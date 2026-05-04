@@ -1341,10 +1341,10 @@ function matchupSvg({c1,c2,team,opp,time,day,loc,heading}){
     <line x1="0" y1="635" x2="1200" y2="635" stroke="${c1}" stroke-width="3"/>
     <text x="600" y="100" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="48" fill="#FFC857" letter-spacing="8">${heading}</text>
     ${fittedText({x:300, y:290, text:team, maxWidth:480, fontSize:84, fill:'#fff'})}
-    <text x="300" y="340" text-anchor="middle" font-family="Oswald, sans-serif" font-size="22" fill="${c1}" letter-spacing="4">HOME</text>
+    <text x="300" y="410" text-anchor="middle" font-family="Oswald, sans-serif" font-size="22" fill="${c1}" letter-spacing="4">HOME</text>
     <text x="600" y="320" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="120" fill="#FFC857">VS</text>
     ${fittedText({x:900, y:290, text:opp, maxWidth:480, fontSize:84, fill:'#fff'})}
-    <text x="900" y="340" text-anchor="middle" font-family="Oswald, sans-serif" font-size="22" fill="${c2}" letter-spacing="4">AWAY</text>
+    <text x="900" y="410" text-anchor="middle" font-family="Oswald, sans-serif" font-size="22" fill="${c2}" letter-spacing="4">GUEST</text>
     <rect x="200" y="430" width="800" height="2" fill="${c2}" opacity="0.4"/>
     <text x="600" y="500" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="56" fill="#fff">${day.toUpperCase()} · ${time}</text>
     ${fittedText({x:600, y:555, text:loc.toUpperCase(), maxWidth:1100, fontSize:26, family:'Oswald, sans-serif', fill:'#8A95B5', letterSpacing:'2', wrap:false})}
@@ -2031,7 +2031,7 @@ function slideHype({c1,c2,team}){
 function slideMatchup({c1,c2,team,opp,isHome}){
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="100%" style="aspect-ratio:9/16">
     ${slideBg(c1,c2)}
-    <text x="540" y="380" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="64" fill="#FFC857" letter-spacing="12">${isHome?'HOME':'AWAY'}</text>
+    <text x="540" y="380" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="64" fill="#FFC857" letter-spacing="12">${isHome?'HOME':'GUEST'}</text>
     ${fittedText({x:540, y:650, text:team, maxWidth:940, fontSize:120, fill:'#fff'})}
     <text x="540" y="720" text-anchor="middle" font-family="Oswald, sans-serif" font-size="28" fill="${c1}" letter-spacing="6">US</text>
     <text x="540" y="1000" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="200" fill="#FFC857">VS</text>
