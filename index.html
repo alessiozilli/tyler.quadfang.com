@@ -295,7 +295,7 @@ footer .signature{color:var(--gold);font-family:'Oswald';font-weight:600;letter-
 <!-- TOURNAMENT -->
 <section class="panel active" id="tournament">
   <h2 class="section-title">Tournament Weekend</h2>
-  <p class="section-sub">Lloyd · RJ Lalonde Arena (10 teams, top 4 Sun) &nbsp;·&nbsp; Red Deer · Tradition Lives May 15–18 · G.H. Dawe Arena (U15B) &nbsp;·&nbsp; Pre-loaded from your sheet.</p>
+  <p class="section-sub">Lloyd · RJ Lalonde Arena (10 teams, top 4 Sun) &nbsp;·&nbsp; Red Deer · Tradition Lives May 15–18 · all Thrashers age groups (U11 / U13B / U15B / U15F / U17B) · G.H. Dawe + Kinsmen + Collicutt &nbsp;·&nbsp; Pre-loaded from your sheet.</p>
 
   <div class="card" style="margin-bottom:18px">
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px">
@@ -657,12 +657,24 @@ const DEFAULT_STATE = {
     {id:'t9',day:'SAT',time:'22:30',title:'Curfew',type:'curfew',loc:'Hotel',notes:'After Jr B game'},
     {id:'t10',day:'SUN',time:'12:00',title:'3rd vs 4th Place — TBD',type:'tbd',loc:'C2 Cenovus',notes:'Top 4 of 10 teams play Sunday'},
     {id:'t11',day:'SUN',time:'12:30',title:'1st Place Game vs Lloyd Brutes 1 — TBD',type:'tbd',loc:'RJ Lalonde Arena',notes:'Top 4 of 10 teams play Sunday'},
-    // ---------- Red Deer · Tradition Lives 2026 (May 15–18) · U15B Thrashers ----------
-    {id:'t12',day:'SAT',time:'09:30',title:'Game 1 — vs Brooks Drillers',type:'game-home',loc:'G.H. Dawe Arena, Red Deer (South)',notes:'Tradition Lives · Sat May 16 · Home · Round-robin'},
-    {id:'t13',day:'SAT',time:'14:30',title:'Game 2 — vs Red Deer Chiefs U15 B 1',type:'game-away',loc:'G.H. Dawe Arena, Red Deer (North)',notes:'Tradition Lives · Sat May 16 · Away · Round-robin'},
-    {id:'t14',day:'SUN',time:'11:45',title:'Game 3 — vs Calgary Axemen B2',type:'game-home',loc:'G.H. Dawe Arena, Red Deer (South)',notes:'Tradition Lives · Sun May 17 · Home · Round-robin'},
-    {id:'t15',day:'SUN',time:'16:30',title:'Bracket Placement — TBD',type:'tbd',loc:'G.H. Dawe Arena, Red Deer',notes:'Tradition Lives · Sun May 17 · Time + opponent depend on pool finish (16:30 / 17:00 / 18:00 / 18:30)'},
-    {id:'t16',day:'MON',time:'09:45',title:'Medal Game (if qualified) — TBD',type:'tbd',loc:'G.H. Dawe Arena, Red Deer',notes:'Tradition Lives · Mon May 18 · Bronze or Gold depending on bracket'}
+    // ---------- Red Deer · Tradition Lives 2026 (May 15–18) · ALL Thrashers age groups ----------
+    {id:'t12',day:'FRI',time:'17:45',title:'U15F · vs Cranbrook Blackwolves',type:'game-away',loc:'G.H. Dawe Arena, Red Deer (North)',notes:'Tradition Lives · Fri May 15 · Away · Round-robin'},
+    {id:'t13',day:'FRI',time:'19:15',title:'U17B · vs Calgary Axemen U17 B 2',type:'game-home',loc:'Kinsmen Community Arenas, Red Deer (Kin City A)',notes:'Tradition Lives · Fri May 15 · Home · Round-robin'},
+    {id:'t14',day:'SAT',time:'08:00',title:'U13B · vs Calgary Axemen 1',type:'game-away',loc:'Collicutt Centre, Red Deer (West)',notes:'Tradition Lives · Sat May 16 · Away · Round-robin'},
+    {id:'t15',day:'SAT',time:'08:00',title:'U15F · vs Rams U15F-1',type:'game-home',loc:'G.H. Dawe Arena, Red Deer (North)',notes:'Tradition Lives · Sat May 16 · Home · Round-robin'},
+    {id:'t16',day:'SAT',time:'09:30',title:'U15B · vs Brooks Drillers',type:'game-home',loc:'G.H. Dawe Arena, Red Deer (South)',notes:'Tradition Lives · Sat May 16 · Home · Round-robin'},
+    {id:'t17',day:'SAT',time:'10:30',title:'U11 · vs Red Deer Chiefs U11 B 2',type:'game-home',loc:'Collicutt Centre, Red Deer (West)',notes:'Tradition Lives · Sat May 16 · Home · Round-robin · Thrashers U11-1'},
+    {id:'t18',day:'SAT',time:'14:00',title:'U17B · vs Edmonton Warriors U17 B',type:'game-home',loc:'G.H. Dawe Arena, Red Deer (South)',notes:'Tradition Lives · Sat May 16 · Home · Round-robin'},
+    {id:'t19',day:'SAT',time:'14:30',title:'U15B · vs Red Deer Chiefs U15 B 1',type:'game-away',loc:'G.H. Dawe Arena, Red Deer (North)',notes:'Tradition Lives · Sat May 16 · Away · Round-robin'},
+    {id:'t20',day:'SAT',time:'16:00',title:'U13B · vs Red Deer Chiefs U13 B 1',type:'game-away',loc:'Collicutt Centre, Red Deer (West)',notes:'Tradition Lives · Sat May 16 · Away · Round-robin'},
+    {id:'t21',day:'SAT',time:'16:15',title:'U15F · vs Calgary Fury U15 Blue',type:'game-away',loc:'G.H. Dawe Arena, Red Deer (South)',notes:'Tradition Lives · Sat May 16 · Away · Round-robin'},
+    {id:'t22',day:'SAT',time:'17:15',title:'U11 · vs Cranbrook Blackwolves Black',type:'game-away',loc:'Collicutt Centre, Red Deer (East)',notes:'Tradition Lives · Sat May 16 · Away · Round-robin · Thrashers U11-1'},
+    {id:'t23',day:'SAT',time:'19:30',title:'U17B · vs Cranbrook Black Wolves U17',type:'game-away',loc:'Kinsmen Community Arenas, Red Deer (Kin City A)',notes:'Tradition Lives · Sat May 16 · Away · Round-robin'},
+    {id:'t24',day:'SUN',time:'08:00',title:'U13B · vs Cranbrook Black Wolves Orange',type:'game-home',loc:'Collicutt Centre, Red Deer (West)',notes:'Tradition Lives · Sun May 17 · Home · Round-robin'},
+    {id:'t25',day:'SUN',time:'11:45',title:'U15B · vs Calgary Axemen B2',type:'game-home',loc:'G.H. Dawe Arena, Red Deer (South)',notes:'Tradition Lives · Sun May 17 · Home · Round-robin'},
+    {id:'t26',day:'SUN',time:'12:30',title:'U11 · vs Calgary Hornets 1',type:'game-away',loc:'Collicutt Centre, Red Deer (East)',notes:'Tradition Lives · Sun May 17 · Away · Round-robin'},
+    {id:'t27',day:'SUN',time:'16:30',title:'Bracket placement (all age groups) — TBD',type:'tbd',loc:'Red Deer venues (G.H. Dawe / Kinsmen / Collicutt)',notes:'Tradition Lives · Sun May 17 evening · Time + opponent depend on each pool finish (U15B brackets 16:30 / 17:00 / 18:00 / 18:30; U15F crossover 13:00–13:15)'},
+    {id:'t28',day:'MON',time:'09:45',title:'Medal games (all age groups) — TBD',type:'tbd',loc:'Red Deer venues (G.H. Dawe / Kinsmen / Collicutt)',notes:'Tradition Lives · Mon May 18 morning · Bronze + Gold per age group (U15B 09:45; U15F 08:00; U17B/U13B/U11 — check sheet)'}
   ],
   custom: [],
   roster: [],
