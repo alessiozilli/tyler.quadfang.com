@@ -29,12 +29,38 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:var(--ink);color:var(--text);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
 body{
-  background:
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><g fill='none' stroke='%2300D4FF' stroke-opacity='0.05' stroke-width='1.5'><line x1='10' y1='90' x2='50' y2='50'/><line x1='50' y1='50' x2='60' y2='40'/><circle cx='60' cy='40' r='5' fill='%23FF6B35' fill-opacity='0.06' stroke='none'/><line x1='60' y1='10' x2='90' y2='40'/><line x1='90' y1='40' x2='100' y2='50'/><circle cx='10' cy='90' r='5' fill='%23FF6B35' fill-opacity='0.06' stroke='none'/></g></svg>"),
     radial-gradient(ellipse 1200px 800px at 50% -200px, rgba(0,212,255,.12), transparent 60%),
     radial-gradient(ellipse 800px 600px at 80% 100%, rgba(255,107,53,.08), transparent 60%),
     linear-gradient(180deg, var(--ink) 0%, var(--rink) 100%);
+  background-size: 100px 100px, auto, auto, auto;
   background-attachment:fixed;
 }
+@keyframes crestPulse {
+  0%, 100% { box-shadow: 0 0 40px rgba(255,107,53,.4), inset 0 -8px 16px rgba(0,0,0,.4); transform: scale(1); }
+  50%      { box-shadow: 0 0 70px rgba(255,107,53,.75), inset 0 -8px 16px rgba(0,0,0,.4); transform: scale(1.04); }
+}
+.crest { animation: crestPulse 2.8s ease-in-out infinite; }
+/* per-age-group accents */
+.event[data-age="U11"] { border-left-color:#00D4FF !important }
+.event[data-age="U13B"]{ border-left-color:#22C55E !important }
+.event[data-age="U15B"]{ border-left-color:#FF6B35 !important }
+.event[data-age="U15F"]{ border-left-color:#EC4899 !important }
+.event[data-age="U17B"]{ border-left-color:#A855F7 !important }
+.event-age-tag{
+  display:inline-block;padding:2px 7px;border-radius:4px;font-family:'Oswald';font-size:10px;
+  letter-spacing:.1em;text-transform:uppercase;margin-right:6px;vertical-align:middle;
+}
+.event-age-tag[data-age="U11"] { background:rgba(0,212,255,.15);color:#00D4FF }
+.event-age-tag[data-age="U13B"]{ background:rgba(34,197,94,.15);color:#22C55E }
+.event-age-tag[data-age="U15B"]{ background:rgba(255,107,53,.15);color:#FF6B35 }
+.event-age-tag[data-age="U15F"]{ background:rgba(236,72,153,.15);color:#EC4899 }
+.event-age-tag[data-age="U17B"]{ background:rgba(168,85,247,.15);color:#A855F7 }
+/* tournament hero banner */
+.tournament-hero{position:relative;border-radius:14px;overflow:hidden;margin:0 0 16px;height:160px;background:linear-gradient(135deg,#0F1A38 0%,#05080F 100%);border:1px solid var(--line)}
+.tournament-hero svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.tournament-hero + .tournament-hero{margin-top:24px}
 /* Rink line decorative top */
 body::before{
   content:"";position:fixed;top:0;left:0;right:0;height:4px;
@@ -654,35 +680,35 @@ const DEFAULT_STATE = {
     mgrPhone: '780-518-3913'
   },
   tournament: [
-    {id:'t1',day:'FRI',time:'21:30',title:'Curfew',type:'curfew',loc:'Hotel',notes:'All players in their rooms'},
-    {id:'t2',day:'SAT',time:'06:15',title:'Team Breakfast',type:'meal',loc:'Hotel',notes:'Recommended but optional'},
-    {id:'t3',day:'SAT',time:'07:00',title:'Players Arrive',type:'arrive',loc:'RJ Lalonde Arena',notes:'No later than 7:00 AM'},
-    {id:'t4',day:'SAT',time:'08:00',title:'Game 2 — vs Lakeland Heat 1',type:'game-home',loc:'RJ Lalonde Arena',notes:'Home · 50 min warm-up + dryland'},
-    {id:'t5',day:'SAT',time:'11:45',title:'Players Arrive',type:'arrive',loc:'RJ Lalonde Arena',notes:'No later than Noon'},
-    {id:'t6',day:'SAT',time:'12:30',title:'Game 3 — vs Lloyd Brutes 1',type:'game-away',loc:'RJ Lalonde Arena',notes:'Away · 50 min warm-up + dryland'},
-    {id:'t7',day:'SAT',time:'14:00',title:'Team BBQ',type:'meal',loc:'Arena Parking Lot',notes:''},
-    {id:'t8',day:'SAT',time:'18:30',title:'Group Bonding — Bobcats Jr B',type:'bonding',loc:'RJ Lalonde Arena',notes:'Recommended but optional'},
-    {id:'t9',day:'SAT',time:'22:30',title:'Curfew',type:'curfew',loc:'Hotel',notes:'After Jr B game'},
-    {id:'t10',day:'SUN',time:'12:00',title:'3rd vs 4th Place — TBD',type:'tbd',loc:'C2 Cenovus',notes:'Top 4 of 10 teams play Sunday'},
-    {id:'t11',day:'SUN',time:'12:30',title:'1st Place Game vs Lloyd Brutes 1 — TBD',type:'tbd',loc:'RJ Lalonde Arena',notes:'Top 4 of 10 teams play Sunday'},
+    {id:'t1',day:'FRI',time:'21:30',title:'Curfew',type:'curfew',loc:'Hotel',notes:'All players in their rooms',tournament:'lloyd'},
+    {id:'t2',day:'SAT',time:'06:15',title:'Team Breakfast',type:'meal',loc:'Hotel',notes:'Recommended but optional',tournament:'lloyd'},
+    {id:'t3',day:'SAT',time:'07:00',title:'Players Arrive',type:'arrive',loc:'RJ Lalonde Arena',notes:'No later than 7:00 AM',tournament:'lloyd'},
+    {id:'t4',day:'SAT',time:'08:00',title:'Game 2 — vs Lakeland Heat 1',type:'game-home',loc:'RJ Lalonde Arena',notes:'Home · 50 min warm-up + dryland',tournament:'lloyd'},
+    {id:'t5',day:'SAT',time:'11:45',title:'Players Arrive',type:'arrive',loc:'RJ Lalonde Arena',notes:'No later than Noon',tournament:'lloyd'},
+    {id:'t6',day:'SAT',time:'12:30',title:'Game 3 — vs Lloyd Brutes 1',type:'game-away',loc:'RJ Lalonde Arena',notes:'Away · 50 min warm-up + dryland',tournament:'lloyd'},
+    {id:'t7',day:'SAT',time:'14:00',title:'Team BBQ',type:'meal',loc:'Arena Parking Lot',notes:'',tournament:'lloyd'},
+    {id:'t8',day:'SAT',time:'18:30',title:'Group Bonding — Bobcats Jr B',type:'bonding',loc:'RJ Lalonde Arena',notes:'Recommended but optional',tournament:'lloyd'},
+    {id:'t9',day:'SAT',time:'22:30',title:'Curfew',type:'curfew',loc:'Hotel',notes:'After Jr B game',tournament:'lloyd'},
+    {id:'t10',day:'SUN',time:'12:00',title:'3rd vs 4th Place — TBD',type:'tbd',loc:'C2 Cenovus',notes:'Top 4 of 10 teams play Sunday',tournament:'lloyd'},
+    {id:'t11',day:'SUN',time:'12:30',title:'1st Place Game vs Lloyd Brutes 1 — TBD',type:'tbd',loc:'RJ Lalonde Arena',notes:'Top 4 of 10 teams play Sunday',tournament:'lloyd'},
     // ---------- Red Deer · Tradition Lives 2026 (May 15–18) · ALL Thrashers age groups ----------
-    {id:'t12',day:'FRI',time:'17:45',title:'U15F · vs Cranbrook Blackwolves',type:'game-away',loc:'G.H. Dawe Arena, Red Deer (North)',notes:'Tradition Lives · Fri May 15 · Away · Round-robin'},
-    {id:'t13',day:'FRI',time:'19:15',title:'U17B · vs Calgary Axemen U17 B 2',type:'game-home',loc:'Kinsmen Community Arenas, Red Deer (Kin City A)',notes:'Tradition Lives · Fri May 15 · Home · Round-robin'},
-    {id:'t14',day:'SAT',time:'08:00',title:'U13B · vs Calgary Axemen 1',type:'game-away',loc:'Collicutt Centre, Red Deer (West)',notes:'Tradition Lives · Sat May 16 · Away · Round-robin'},
-    {id:'t15',day:'SAT',time:'08:00',title:'U15F · vs Rams U15F-1',type:'game-home',loc:'G.H. Dawe Arena, Red Deer (North)',notes:'Tradition Lives · Sat May 16 · Home · Round-robin'},
-    {id:'t16',day:'SAT',time:'09:30',title:'U15B · vs Brooks Drillers',type:'game-home',loc:'G.H. Dawe Arena, Red Deer (South)',notes:'Tradition Lives · Sat May 16 · Home · Round-robin'},
-    {id:'t17',day:'SAT',time:'10:30',title:'U11 · vs Red Deer Chiefs U11 B 2',type:'game-home',loc:'Collicutt Centre, Red Deer (West)',notes:'Tradition Lives · Sat May 16 · Home · Round-robin · Thrashers U11-1'},
-    {id:'t18',day:'SAT',time:'14:00',title:'U17B · vs Edmonton Warriors U17 B',type:'game-home',loc:'G.H. Dawe Arena, Red Deer (South)',notes:'Tradition Lives · Sat May 16 · Home · Round-robin'},
-    {id:'t19',day:'SAT',time:'14:30',title:'U15B · vs Red Deer Chiefs U15 B 1',type:'game-away',loc:'G.H. Dawe Arena, Red Deer (North)',notes:'Tradition Lives · Sat May 16 · Away · Round-robin'},
-    {id:'t20',day:'SAT',time:'16:00',title:'U13B · vs Red Deer Chiefs U13 B 1',type:'game-away',loc:'Collicutt Centre, Red Deer (West)',notes:'Tradition Lives · Sat May 16 · Away · Round-robin'},
-    {id:'t21',day:'SAT',time:'16:15',title:'U15F · vs Calgary Fury U15 Blue',type:'game-away',loc:'G.H. Dawe Arena, Red Deer (South)',notes:'Tradition Lives · Sat May 16 · Away · Round-robin'},
-    {id:'t22',day:'SAT',time:'17:15',title:'U11 · vs Cranbrook Blackwolves Black',type:'game-away',loc:'Collicutt Centre, Red Deer (East)',notes:'Tradition Lives · Sat May 16 · Away · Round-robin · Thrashers U11-1'},
-    {id:'t23',day:'SAT',time:'19:30',title:'U17B · vs Cranbrook Black Wolves U17',type:'game-away',loc:'Kinsmen Community Arenas, Red Deer (Kin City A)',notes:'Tradition Lives · Sat May 16 · Away · Round-robin'},
-    {id:'t24',day:'SUN',time:'08:00',title:'U13B · vs Cranbrook Black Wolves Orange',type:'game-home',loc:'Collicutt Centre, Red Deer (West)',notes:'Tradition Lives · Sun May 17 · Home · Round-robin'},
-    {id:'t25',day:'SUN',time:'11:45',title:'U15B · vs Calgary Axemen B2',type:'game-home',loc:'G.H. Dawe Arena, Red Deer (South)',notes:'Tradition Lives · Sun May 17 · Home · Round-robin'},
-    {id:'t26',day:'SUN',time:'12:30',title:'U11 · vs Calgary Hornets 1',type:'game-away',loc:'Collicutt Centre, Red Deer (East)',notes:'Tradition Lives · Sun May 17 · Away · Round-robin'},
-    {id:'t27',day:'SUN',time:'16:30',title:'Bracket placement (all age groups) — TBD',type:'tbd',loc:'Red Deer venues (G.H. Dawe / Kinsmen / Collicutt)',notes:'Tradition Lives · Sun May 17 evening · Time + opponent depend on each pool finish (U15B brackets 16:30 / 17:00 / 18:00 / 18:30; U15F crossover 13:00–13:15)'},
-    {id:'t28',day:'MON',time:'09:45',title:'Medal games (all age groups) — TBD',type:'tbd',loc:'Red Deer venues (G.H. Dawe / Kinsmen / Collicutt)',notes:'Tradition Lives · Mon May 18 morning · Bronze + Gold per age group (U15B 09:45; U15F 08:00; U17B/U13B/U11 — check sheet)'}
+    {id:'t12',day:'FRI',time:'17:45',age:'U15F',title:'vs Cranbrook Blackwolves',type:'game-away',loc:'G.H. Dawe Arena, Red Deer (North)',notes:'Tradition Lives · Fri May 15 · Away · Round-robin',tournament:'reddeer'},
+    {id:'t13',day:'FRI',time:'19:15',age:'U17B',title:'vs Calgary Axemen U17 B 2',type:'game-home',loc:'Kinsmen Community Arenas, Red Deer (Kin City A)',notes:'Tradition Lives · Fri May 15 · Home · Round-robin',tournament:'reddeer'},
+    {id:'t14',day:'SAT',time:'08:00',age:'U13B',title:'vs Calgary Axemen 1',type:'game-away',loc:'Collicutt Centre, Red Deer (West)',notes:'Tradition Lives · Sat May 16 · Away · Round-robin',tournament:'reddeer'},
+    {id:'t15',day:'SAT',time:'08:00',age:'U15F',title:'vs Rams U15F-1',type:'game-home',loc:'G.H. Dawe Arena, Red Deer (North)',notes:'Tradition Lives · Sat May 16 · Home · Round-robin',tournament:'reddeer'},
+    {id:'t16',day:'SAT',time:'09:30',age:'U15B',title:'vs Brooks Drillers',type:'game-home',loc:'G.H. Dawe Arena, Red Deer (South)',notes:'Tradition Lives · Sat May 16 · Home · Round-robin',tournament:'reddeer'},
+    {id:'t17',day:'SAT',time:'10:30',age:'U11',title:'vs Red Deer Chiefs U11 B 2',type:'game-home',loc:'Collicutt Centre, Red Deer (West)',notes:'Tradition Lives · Sat May 16 · Home · Round-robin · Thrashers U11-1',tournament:'reddeer'},
+    {id:'t18',day:'SAT',time:'14:00',age:'U17B',title:'vs Edmonton Warriors U17 B',type:'game-home',loc:'G.H. Dawe Arena, Red Deer (South)',notes:'Tradition Lives · Sat May 16 · Home · Round-robin',tournament:'reddeer'},
+    {id:'t19',day:'SAT',time:'14:30',age:'U15B',title:'vs Red Deer Chiefs U15 B 1',type:'game-away',loc:'G.H. Dawe Arena, Red Deer (North)',notes:'Tradition Lives · Sat May 16 · Away · Round-robin',tournament:'reddeer'},
+    {id:'t20',day:'SAT',time:'16:00',age:'U13B',title:'vs Red Deer Chiefs U13 B 1',type:'game-away',loc:'Collicutt Centre, Red Deer (West)',notes:'Tradition Lives · Sat May 16 · Away · Round-robin',tournament:'reddeer'},
+    {id:'t21',day:'SAT',time:'16:15',age:'U15F',title:'vs Calgary Fury U15 Blue',type:'game-away',loc:'G.H. Dawe Arena, Red Deer (South)',notes:'Tradition Lives · Sat May 16 · Away · Round-robin',tournament:'reddeer'},
+    {id:'t22',day:'SAT',time:'17:15',age:'U11',title:'vs Cranbrook Blackwolves Black',type:'game-away',loc:'Collicutt Centre, Red Deer (East)',notes:'Tradition Lives · Sat May 16 · Away · Round-robin · Thrashers U11-1',tournament:'reddeer'},
+    {id:'t23',day:'SAT',time:'19:30',age:'U17B',title:'vs Cranbrook Black Wolves U17',type:'game-away',loc:'Kinsmen Community Arenas, Red Deer (Kin City A)',notes:'Tradition Lives · Sat May 16 · Away · Round-robin',tournament:'reddeer'},
+    {id:'t24',day:'SUN',time:'08:00',age:'U13B',title:'vs Cranbrook Black Wolves Orange',type:'game-home',loc:'Collicutt Centre, Red Deer (West)',notes:'Tradition Lives · Sun May 17 · Home · Round-robin',tournament:'reddeer'},
+    {id:'t25',day:'SUN',time:'11:45',age:'U15B',title:'vs Calgary Axemen B2',type:'game-home',loc:'G.H. Dawe Arena, Red Deer (South)',notes:'Tradition Lives · Sun May 17 · Home · Round-robin',tournament:'reddeer'},
+    {id:'t26',day:'SUN',time:'12:30',age:'U11',title:'vs Calgary Hornets 1',type:'game-away',loc:'Collicutt Centre, Red Deer (East)',notes:'Tradition Lives · Sun May 17 · Away · Round-robin',tournament:'reddeer'},
+    {id:'t27',day:'SUN',time:'16:30',title:'Bracket placement (all age groups) — TBD',type:'tbd',loc:'Red Deer venues (G.H. Dawe / Kinsmen / Collicutt)',notes:'Tradition Lives · Sun May 17 evening · Time + opponent depend on each pool finish (U15B brackets 16:30 / 17:00 / 18:00 / 18:30; U15F crossover 13:00–13:15)',tournament:'reddeer'},
+    {id:'t28',day:'MON',time:'09:45',title:'Medal games (all age groups) — TBD',type:'tbd',loc:'Red Deer venues (G.H. Dawe / Kinsmen / Collicutt)',notes:'Tradition Lives · Mon May 18 morning · Bronze + Gold per age group (U15B 09:45; U15F 08:00; U17B/U13B/U11 — check sheet)',tournament:'reddeer'}
   ],
   custom: [],
   roster: [],
@@ -761,6 +787,25 @@ function dayLabel(day){
 }
 
 // ============= TOURNAMENT RENDER =============
+function tournamentHeroSvg(label, name, sub){
+  return `
+<div class="tournament-hero">
+  <svg viewBox="0 0 800 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid slice">
+    <defs>
+      <linearGradient id="h_${label}" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#FF6B35" stop-opacity="0.4"/>
+        <stop offset="1" stop-color="#FF6B35" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <rect x="0" y="0" width="500" height="160" fill="url(#h_${label})"/>
+    <line x1="0" y1="4" x2="800" y2="4" stroke="#00D4FF" stroke-width="3"/>
+    <line x1="0" y1="156" x2="800" y2="156" stroke="#FF6B35" stroke-width="3"/>
+    <text x="30" y="46" font-family="Oswald,sans-serif" font-size="12" fill="#FFC857" letter-spacing="6">TOURNAMENT</text>
+    <text x="30" y="100" font-family="Bebas Neue,Impact,sans-serif" font-size="52" fill="#fff" letter-spacing="3">${escapeHtml(name)}</text>
+    <text x="30" y="135" font-family="Oswald,sans-serif" font-size="14" fill="#8A95B5" letter-spacing="3">${escapeHtml(sub)}</text>
+  </svg>
+</div>`;
+}
 function renderTournament(){
   const list = document.getElementById('tournamentList');
   list.innerHTML = '';
@@ -768,8 +813,21 @@ function renderTournament(){
     list.innerHTML = '<div class="empty">No tournament events.</div>';
     return;
   }
+  // Group by tournament — Lloyd first (default), then Red Deer
+  const groups = {
+    lloyd:   {label:'lloyd',   name:'LLOYDMINSTER BRUTE INVITE',   sub:'RJ LALONDE ARENA · 10 TEAMS · TOP 4 SUNDAY',           events:[]},
+    reddeer: {label:'reddeer', name:'TRADITION LIVES 2026',         sub:'G.H. DAWE / KINSMEN / COLLICUTT · RED DEER · MAY 15–18', events:[]},
+    other:   {label:'other',   name:'OTHER',                        sub:'',                                                       events:[]}
+  };
   state.tournament.forEach(e=>{
-    list.appendChild(eventCard(e, 'tournament'));
+    const key = (e.tournament && groups[e.tournament]) ? e.tournament : 'other';
+    groups[key].events.push(e);
+  });
+  ['lloyd','reddeer','other'].forEach(k=>{
+    const g = groups[k];
+    if(!g.events.length) return;
+    if(k!=='other') list.insertAdjacentHTML('beforeend', tournamentHeroSvg(g.label, g.name, g.sub));
+    g.events.forEach(e=> list.appendChild(eventCard(e,'tournament')));
   });
 }
 // ============= TEAM LOGOS / BADGES =============
@@ -820,9 +878,11 @@ function eventCard(e, listKey){
   if(e.type==='bonding') el.classList.add('bonding');
   if(e.type==='curfew') el.classList.add('curfew');
   if(e.type==='tbd') el.classList.add('tbd');
+  if(e.age) el.setAttribute('data-age', e.age);
   const showLogo = ['game-home','game-away','tbd'].includes(e.type);
   if(showLogo) el.classList.add('has-logo');
   const logoHtml = showLogo ? teamLogoHtml(e.title) : '';
+  const ageTag = e.age ? `<span class="event-age-tag" data-age="${e.age}">${e.age}</span>` : '';
   const f = fmtTime(e.time);
   el.innerHTML = `
     ${logoHtml}
@@ -832,7 +892,7 @@ function eventCard(e, listKey){
       <div class="ampm">${f?f.ampm:''}</div>
     </div>
     <div class="event-detail">
-      <div class="event-title">${escapeHtml(e.title)}</div>
+      <div class="event-title">${ageTag}${escapeHtml(e.title)}</div>
       <div class="event-meta">
         ${e.loc?`<span>📍 ${escapeHtml(e.loc)}</span>`:''}
         ${e.notes?`<span>📝 ${escapeHtml(e.notes)}</span>`:''}
