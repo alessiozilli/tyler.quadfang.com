@@ -321,6 +321,7 @@ footer .signature{color:var(--gold);font-family:'Oswald';font-weight:600;letter-
     <button class="tab" data-tab="watch"><span class="ic">🔔</span>Watch</button>
     <button class="tab" data-tab="trip"><span class="ic">🎒</span>Trip Kit</button>
     <button class="tab" data-tab="settings"><span class="ic">⚙️</span>Setup</button>
+    <button class="tab" data-tab="howto"><span class="ic">📖</span>How to Use</button>
   </div>
 </nav>
 
@@ -1073,6 +1074,14 @@ function renderGraphic(){
   }
   document.getElementById('svgPreview').innerHTML = svg;
 }
+// fitAttr — returns ` textLength="..." lengthAdjust="spacingAndGlyphs"` ONLY when
+// the text is wider than maxWidth at the given fontSize. Bebas Neue / Impact /
+// Oswald are condensed, so ~0.48 of fontSize per character is a safe average.
+function fitAttr(text, maxWidth, fontSize, charRatio){
+  const r = (typeof charRatio === 'number') ? charRatio : 0.48;
+  const est = String(text||'').length * fontSize * r;
+  return est > maxWidth ? ` textLength="${maxWidth}" lengthAdjust="spacingAndGlyphs"` : '';
+}
 function matchupSvg({c1,c2,team,opp,time,day,loc,heading}){
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%">
     <defs>
@@ -1095,14 +1104,14 @@ function matchupSvg({c1,c2,team,opp,time,day,loc,heading}){
     <line x1="0" y1="40" x2="1200" y2="40" stroke="${c2}" stroke-width="3"/>
     <line x1="0" y1="635" x2="1200" y2="635" stroke="${c1}" stroke-width="3"/>
     <text x="600" y="100" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="48" fill="#FFC857" letter-spacing="8">${heading}</text>
-    <text x="300" y="290" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="84" fill="#fff">${team}</text>
+    <text x="300" y="290" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="84" fill="#fff"${fitAttr(team, 480, 84)}>${team}</text>
     <text x="300" y="340" text-anchor="middle" font-family="Oswald, sans-serif" font-size="22" fill="${c1}" letter-spacing="4">HOME</text>
     <text x="600" y="320" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="120" fill="#FFC857">VS</text>
-    <text x="900" y="290" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="84" fill="#fff">${opp}</text>
+    <text x="900" y="290" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="84" fill="#fff"${fitAttr(opp, 480, 84)}>${opp}</text>
     <text x="900" y="340" text-anchor="middle" font-family="Oswald, sans-serif" font-size="22" fill="${c2}" letter-spacing="4">AWAY</text>
     <rect x="200" y="430" width="800" height="2" fill="${c2}" opacity="0.4"/>
     <text x="600" y="500" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="56" fill="#fff">${day.toUpperCase()} · ${time}</text>
-    <text x="600" y="555" text-anchor="middle" font-family="Oswald, sans-serif" font-size="26" fill="#8A95B5" letter-spacing="2">${loc.toUpperCase()}</text>
+    <text x="600" y="555" text-anchor="middle" font-family="Oswald, sans-serif" font-size="26" fill="#8A95B5" letter-spacing="2"${fitAttr(loc, 1100, 26)}>${loc.toUpperCase()}</text>
     <text x="600" y="610" text-anchor="middle" font-family="Oswald, sans-serif" font-size="16" fill="${c1}" letter-spacing="6">GO THRASHERS</text>
   </svg>`;
 }
@@ -1121,10 +1130,10 @@ function resultSvg({c1,c2,team,opp,ours,theirs,won,day,loc}){
     <line x1="0" y1="635" x2="1200" y2="635" stroke="${headColor}" stroke-width="3"/>
     <text x="600" y="110" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="64" fill="${headColor}" letter-spacing="12">${headline}</text>
     <text x="600" y="160" text-anchor="middle" font-family="Oswald, sans-serif" font-size="20" fill="#8A95B5" letter-spacing="6">FINAL · ${day.toUpperCase()}</text>
-    <text x="300" y="320" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="72" fill="#fff">${team}</text>
+    <text x="300" y="320" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="72" fill="#fff"${fitAttr(team, 480, 72)}>${team}</text>
     <text x="300" y="470" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="180" fill="${c1}">${ours||'—'}</text>
     <text x="600" y="430" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="100" fill="#FFC857">—</text>
-    <text x="900" y="320" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="72" fill="#fff">${opp}</text>
+    <text x="900" y="320" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="72" fill="#fff"${fitAttr(opp, 480, 72)}>${opp}</text>
     <text x="900" y="470" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="180" fill="${c2}">${theirs||'—'}</text>
     <text x="600" y="565" text-anchor="middle" font-family="Oswald, sans-serif" font-size="22" fill="#8A95B5" letter-spacing="3">${loc.toUpperCase()}</text>
     <text x="600" y="610" text-anchor="middle" font-family="Oswald, sans-serif" font-size="16" fill="${c1}" letter-spacing="6">#GOTHRASHERS</text>
@@ -1787,10 +1796,10 @@ function slideMatchup({c1,c2,team,opp,isHome}){
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="100%" style="aspect-ratio:9/16">
     ${slideBg(c1,c2)}
     <text x="540" y="380" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="64" fill="#FFC857" letter-spacing="12">${isHome?'HOME':'AWAY'}</text>
-    <text x="540" y="650" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="120" fill="#fff">${team}</text>
+    <text x="540" y="650" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="120" fill="#fff"${fitAttr(team, 940, 120)}>${team}</text>
     <text x="540" y="720" text-anchor="middle" font-family="Oswald, sans-serif" font-size="28" fill="${c1}" letter-spacing="6">US</text>
     <text x="540" y="1000" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="200" fill="#FFC857">VS</text>
-    <text x="540" y="1280" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="120" fill="#fff">${opp}</text>
+    <text x="540" y="1280" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="120" fill="#fff"${fitAttr(opp, 940, 120)}>${opp}</text>
     <text x="540" y="1350" text-anchor="middle" font-family="Oswald, sans-serif" font-size="28" fill="${c2}" letter-spacing="6">THEM</text>
   </svg>`;
 }
@@ -1802,14 +1811,14 @@ function slideTime({c1,c2,day,time,loc}){
     <text x="540" y="850" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="160" fill="#FFC857">${time}</text>
     <rect x="240" y="950" width="600" height="4" fill="${c1}"/>
     <text x="540" y="1150" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="80" fill="${c2}" letter-spacing="12">WHERE</text>
-    <text x="540" y="1320" text-anchor="middle" font-family="Oswald, sans-serif" font-size="56" fill="#fff" letter-spacing="3">${loc.toUpperCase()}</text>
+    <text x="540" y="1320" text-anchor="middle" font-family="Oswald, sans-serif" font-size="56" fill="#fff" letter-spacing="3"${fitAttr(loc, 1000, 56)}>${loc.toUpperCase()}</text>
   </svg>`;
 }
 function slideGo({c1,c2,team}){
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="100%" style="aspect-ratio:9/16">
     ${slideBg(c1,c2)}
     <text x="540" y="800" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="220" fill="${c1}" letter-spacing="20">GO</text>
-    <text x="540" y="1050" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="180" fill="#fff" letter-spacing="8">${team}</text>
+    <text x="540" y="1050" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="180" fill="#fff" letter-spacing="8"${fitAttr(team, 940, 180, 0.55)}>${team}</text>
     <rect x="240" y="1130" width="600" height="6" fill="${c2}"/>
     <text x="540" y="1300" text-anchor="middle" font-family="Oswald, sans-serif" font-size="36" fill="#FFC857" letter-spacing="8">#GOTHRASHERS</text>
     <text x="540" y="1700" text-anchor="middle" font-family="Oswald, sans-serif" font-size="22" fill="${c2}" letter-spacing="6">SEE YOU AT THE RINK</text>
