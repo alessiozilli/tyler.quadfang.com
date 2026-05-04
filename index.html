@@ -98,6 +98,10 @@ h1 .accent{color:var(--ice);text-shadow:0 0 20px rgba(0,212,255,.4)}
   border-bottom:1px solid var(--line);
   padding:8px 0;
 }
+.tabs{position:relative}
+.tabs::after{content:"";position:absolute;right:0;top:0;bottom:0;width:38px;background:linear-gradient(90deg,transparent,var(--ink) 70%);pointer-events:none;z-index:5}
+.footer-help{display:inline-flex;gap:6px;align-items:center;color:var(--ice);text-decoration:none;border-bottom:1px dotted var(--ice);padding-bottom:1px}
+.footer-help:hover{color:var(--gold);border-bottom-color:var(--gold)}
 .tab-strip{
   max-width:1200px;margin:0 auto;display:flex;gap:4px;overflow-x:auto;
   padding:0 12px;scrollbar-width:none;
@@ -334,6 +338,7 @@ footer .signature{color:var(--gold);font-family:'Oswald';font-weight:600;letter-
 
 <nav class="tabs">
   <div class="tab-strip" id="tabStrip">
+    <button class="tab" data-tab="howto"><span class="ic">📖</span>How to Use</button>
     <button class="tab active" data-tab="tournament"><span class="ic">🏆</span>Tournament</button>
     <button class="tab" data-tab="schedule"><span class="ic">📅</span>Schedule</button>
     <button class="tab" data-tab="roster"><span class="ic">🏃</span>Roster</button>
@@ -347,7 +352,6 @@ footer .signature{color:var(--gold);font-family:'Oswald';font-weight:600;letter-
     <button class="tab" data-tab="watch"><span class="ic">🔔</span>Watch</button>
     <button class="tab" data-tab="trip"><span class="ic">🎒</span>Trip Kit</button>
     <button class="tab" data-tab="settings"><span class="ic">⚙️</span>Setup</button>
-    <button class="tab" data-tab="howto"><span class="ic">📖</span>How to Use</button>
   </div>
 </nav>
 
@@ -857,7 +861,7 @@ footer .signature{color:var(--gold);font-family:'Oswald';font-weight:600;letter-
 </main>
 
 <footer>
-  <div>Built free for Tyler · Hosted on QuadFang · Powered by Forge</div>
+  <div>Built free for Tyler · Hosted on QuadFang · Powered by Forge · <a class="footer-help" href="how-to-use.pdf" download>📖 Get the PDF guide</a></div>
   <div class="signature">A friendly trade for the lacrosse parent life 🥍</div>
 </footer>
 
